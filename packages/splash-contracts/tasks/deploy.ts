@@ -21,82 +21,86 @@ task('deploy', 'Deploys SplashProject')
     const network = await ethers.provider.getNetwork();
     const proxyRegistryAddress =
       network.chainId === 1
-        ? '0xa5409ec958c83c3f309868babaca7c86dcb077c1'
-        : '0xf57b2c51ded3a29e6891aba85459d600256cf317';
+        ? '0x58807baD0B376efc12F5AD86aAc70E78ed67deaE'
+        : '0xff7Ca10aF37178BdD056628eF42fD7F799fAc77c';
 
     const [deployer] = await ethers.getSigners();
     const nonce = await deployer.getTransactionCount();
 
     const contracts: Record<ContractName, Contract> = {
       SplashProject: {
-        args: [],
+        args: [
+          "Splash",
+          "SP",
+          proxyRegistryAddress
+        ],
       },
     };
 
     let gasPrice = await ethers.provider.getGasPrice();
     const gasInGwei = Math.round(Number(ethers.utils.formatUnits(gasPrice, 'gwei')));
 
-    promptjs.start();
+    // promptjs.start();
 
-    let result = await promptjs.get([
-      {
-        properties: {
-          gasPrice: {
-            type: 'integer',
-            required: true,
-            description: 'Enter a gas price (gwei)',
-            default: gasInGwei,
-          },
-        },
-      },
-    ]);
+    // let result = await promptjs.get([
+    //   {
+    //     properties: {
+    //       gasPrice: {
+    //         type: 'integer',
+    //         required: true,
+    //         description: 'Enter a gas price (gwei)',
+    //         default: gasInGwei,
+    //       },
+    //     },
+    //   },
+    // ]);
 
-    gasPrice = ethers.utils.parseUnits(result.gasPrice.toString(), 'gwei');
+    // gasPrice = ethers.utils.parseUnits(result.gasPrice.toString(), 'gwei');
 
     for (const [name, contract] of Object.entries(contracts)) {
       const factory = await ethers.getContractFactory(name, {
         libraries: contract?.libraries?.(),
       });
 
-      const deploymentGas = await factory.signer.estimateGas(
-        factory.getDeployTransaction(
-          ...(contract.args?.map(a => (typeof a === 'function' ? a() : a)) ?? []),
-          {
-            gasPrice,
-          },
-        ),
-      );
-      const deploymentCost = deploymentGas.mul(gasPrice);
+      // const deploymentGas = await factory.signer.estimateGas(
+      //   factory.getDeployTransaction(
+      //     ...(contract.args?.map(a => (typeof a === 'function' ? a() : a)) ?? []),
+      //     {
+      //       gasPrice,
+      //     },
+      //   ),
+      // );
+      // const deploymentCost = deploymentGas.mul(gasPrice);
 
-      console.log(
-        `Estimated cost to deploy ${name}: ${ethers.utils.formatUnits(
-          deploymentCost,
-          'ether',
-        )} ETH`,
-      );
+      // console.log(
+      //   `Estimated cost to deploy ${name}: ${ethers.utils.formatUnits(
+      //     deploymentCost,
+      //     'ether',
+      //   )} ETH`,
+      // );
 
-      result = await promptjs.get([
-        {
-          properties: {
-            confirm: {
-              type: 'string',
-              description: 'Type "DEPLOY" to confirm:',
-            },
-          },
-        },
-      ]);
+      // result = await promptjs.get([
+      //   {
+      //     properties: {
+      //       confirm: {
+      //         type: 'string',
+      //         description: 'Type "DEPLOY" to confirm:',
+      //       },
+      //     },
+      //   },
+      // ]);
 
-      if (result.confirm != 'DEPLOY') {
-        console.log('Exiting');
-        return;
-      }
+      // if (result.confirm != 'DEPLOY') {
+      //   console.log('Exiting');
+      //   return;
+      // }
 
       console.log('Deploying...');
 
       const deployedContract = await factory.deploy(
         ...(contract.args?.map(a => (typeof a === 'function' ? a() : a)) ?? []),
         {
-          gasPrice,
+          // gasPrice,
         },
       );
 

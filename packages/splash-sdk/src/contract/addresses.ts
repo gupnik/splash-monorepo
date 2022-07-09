@@ -1,8 +1,8 @@
 import { ChainId, ContractAddresses } from './types';
 
 const chainIdToAddresses: { [chainId: number]: ContractAddresses } = {
-  [ChainId.Local]: {
-    splashProject: '',
+  [ChainId.Mumbai]: {
+    splashProject: '0xcd901A08EAEf9C9eB365efAAF8C97DFbBd273866',
   },
 };
 

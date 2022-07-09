@@ -1,14 +1,13 @@
 import {
-  ContractAddresses as YQCContractAddresses,
+  ContractAddresses as SplashContractAddresses,
   getContractAddressesForChainOrThrow,
-} from '@yqc/sdk';
+} from '@splash/sdk';
 import { ChainId } from '@usedapp/core';
 
 interface ExternalContractAddresses {
-  lidoToken: string | undefined;
 }
 
-export type ContractAddresses = YQCContractAddresses & ExternalContractAddresses;
+export type ContractAddresses = SplashContractAddresses & ExternalContractAddresses;
 
 interface AppConfig {
   jsonRpcUri: string;
@@ -17,10 +16,11 @@ interface AppConfig {
   enableHistory: boolean;
 }
 
-type SupportedChains = ChainId.Rinkeby | ChainId.Mainnet | ChainId.Hardhat;
+console.log(process.env)
 
-export const CHAIN_ID: SupportedChains = parseInt(process.env.REACT_APP_CHAIN_ID ?? '4');
-console.log('CHAIN ', CHAIN_ID);
+type SupportedChains = ChainId.Mumbai | ChainId.Hardhat;
+
+export const CHAIN_ID: SupportedChains = parseInt(process.env.REACT_APP_CHAIN_ID ?? '80001');
 
 export const ETHERSCAN_API_KEY = process.env.REACT_APP_ETHERSCAN_API_KEY ?? '';
 
@@ -28,25 +28,19 @@ const INFURA_PROJECT_ID = process.env.REACT_APP_INFURA_PROJECT_ID;
 
 export const createNetworkHttpUrl = (network: string): string => {
   const custom = process.env[`REACT_APP_${network.toUpperCase()}_JSONRPC`];
-  return custom || `https://${network}.infura.io/v3/${INFURA_PROJECT_ID}`;
+  return custom || `https://polygon-mumbai.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`;
 };
 
 export const createNetworkWsUrl = (network: string): string => {
   const custom = process.env[`REACT_APP_${network.toUpperCase()}_WSRPC`];
-  return custom || `wss://${network}.infura.io/ws/v3/${INFURA_PROJECT_ID}`;
+  return custom || `wss:////polygon-mumbai.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`;
 };
 
 const app: Record<SupportedChains, AppConfig> = {
-  [ChainId.Rinkeby]: {
-    jsonRpcUri: createNetworkHttpUrl('rinkeby'),
-    wsRpcUri: createNetworkWsUrl('rinkeby'),
-    subgraphApiUri: 'https://api.studio.thegraph.com/query/18989/yqc-rinkeby/v0.0.6',
-    enableHistory: process.env.REACT_APP_ENABLE_HISTORY === 'true',
-  },
-  [ChainId.Mainnet]: {
-    jsonRpcUri: createNetworkHttpUrl('mainnet'),
-    wsRpcUri: createNetworkWsUrl('mainnet'),
-    subgraphApiUri: 'https://api.studio.thegraph.com/query/18989/yqc-mainnet/v0.0.1',
+  [ChainId.Mumbai]: {
+    jsonRpcUri: createNetworkHttpUrl('polygon-mumbai'),
+    wsRpcUri: createNetworkWsUrl('polygon-mumbai'),
+    subgraphApiUri: 'https://api.thegraph.com/subgraphs/name/gupnik/splash',
     enableHistory: process.env.REACT_APP_ENABLE_HISTORY === 'true',
   },
   [ChainId.Hardhat]: {
@@ -58,11 +52,7 @@ const app: Record<SupportedChains, AppConfig> = {
 };
 
 const externalAddresses: Record<SupportedChains, ExternalContractAddresses> = {
-  [ChainId.Rinkeby]: {
-    lidoToken: '0xF4242f9d78DB7218Ad72Ee3aE14469DBDE8731eD',
-  },
-  [ChainId.Mainnet]: {
-    lidoToken: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
+  [ChainId.Mumbai]: {
   },
   [ChainId.Hardhat]: {
     lidoToken: undefined,
@@ -70,11 +60,11 @@ const externalAddresses: Record<SupportedChains, ExternalContractAddresses> = {
 };
 
 const getAddresses = (): ContractAddresses => {
-  let queensAddresses = {} as YQCContractAddresses;
+  let splashAddresses = {} as SplashContractAddresses;
   try {
-    queensAddresses = getContractAddressesForChainOrThrow(CHAIN_ID);
+    splashAddresses = getContractAddressesForChainOrThrow(CHAIN_ID);
   } catch {}
-  return { ...queensAddresses, ...externalAddresses[CHAIN_ID] };
+  return { ...splashAddresses, ...externalAddresses[CHAIN_ID] };
 };
 
 const config = {

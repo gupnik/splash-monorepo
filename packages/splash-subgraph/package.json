@@ -14,7 +14,7 @@
     "codegen": "graph codegen --output-dir src/types/ && graph build",
     "deploy": "graph deploy",
     "prepare:mumbai": "mustache config/mumbai.json subgraph.yaml.mustache > subgraph.yaml",
-    "deploy:mumbai": "yarn clean && yarn prepare:mumbai && yarn codegen && yarn deploy --studio yqc-mumbai"
+    "deploy:mumbai": "yarn clean && yarn prepare:mumbai && yarn codegen && yarn deploy --product hosted-service gupnik/Splash"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.24.1",

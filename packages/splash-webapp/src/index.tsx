@@ -85,7 +85,7 @@ const ChainSubscriber: React.FC = () => {
   const loadState = async () => {
     const wsProvider = new WebSocketProvider(config.app.wsRpcUri);
     const splashProjectContract = SplashProjectFactory.connect(
-      config.addresses.yqcAuctionHouseProxy,
+      config.addresses.splashProject,
       wsProvider,
     );
 

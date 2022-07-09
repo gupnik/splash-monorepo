@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { purple } from '../../utils/nounBgColors';
 
 export interface AlertModal {
   show: boolean;
@@ -13,7 +12,7 @@ interface ApplicationState {
 }
 
 const initialState: ApplicationState = {
-  stateBackgroundColor: purple,
+  stateBackgroundColor: "#0000AA",
   alertModal: {
     show: false,
   },
