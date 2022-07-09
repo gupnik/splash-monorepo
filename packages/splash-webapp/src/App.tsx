@@ -8,6 +8,7 @@ import classes from './App.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NotFoundPage from './pages/NotFound';
 import { CHAIN_ID } from './config';
+import { useUserProjects } from './wrappers/splashProject';
 
 function App() {
   const { account, chainId } = useEthers();
@@ -19,6 +20,8 @@ function App() {
   }, [account, dispatch]);
 
   const alertModal = useAppSelector(state => state.application.alertModal);
+
+  const projects = useUserProjects();
 
   return (
     <div className={`${classes.wrapper}`}>
