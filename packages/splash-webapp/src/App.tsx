@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NotFoundPage from './pages/NotFound';
 import { CHAIN_ID } from './config';
 import { useUserProjects } from './wrappers/splashProject';
+import HomePage from './pages/Home';
 
 function App() {
   const { account, chainId } = useEthers();
@@ -35,11 +36,7 @@ function App() {
       )} */}
       <BrowserRouter>
         <Switch>
-          {/* <Route
-            exact
-            path="/noun/:id"
-            render={props => <ProfilePage queenId={Number(props.match.params.id)} />}
-          /> */}
+          <Route exact path="/" component={HomePage} />
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
