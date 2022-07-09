@@ -1,0 +1,35 @@
+type SplashProject @entity {
+  id: ID!
+
+  creator: SplashAccount!
+
+  price: BigInt!
+
+  constituents: [SplashProject!]
+}
+
+type SplashLink @entity {
+  id: ID!
+
+  project: SplashProject!
+
+  constituent: SplashProject!
+
+  price: BigInt!
+
+  blockNumber: BigInt!
+
+  txIndex: BigInt!
+
+  blockTimestamp: BigInt!
+}
+
+type SplashAccount @entity {
+  id: ID!
+
+  projectBalanceRaw: BigInt!
+
+  projectBalance: BigInt!
+
+  projects: [SplashProject!]
+}

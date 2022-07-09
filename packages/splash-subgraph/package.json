@@ -1,0 +1,24 @@
+{
+  "name": "@splash/subgraph",
+  "version": "0.0.1",
+  "description": "Splash subgraph",
+  "author": "Nikhil Gupta",
+  "homepage": "https://yesqueen.club",
+  "license": "GPL-3.0",
+  "main": "build/index.js",
+  "directories": {
+    "src": "src"
+  },
+  "scripts": {
+    "clean": "rimraf ./src/types ./build subgraph.yaml",
+    "codegen": "graph codegen --output-dir src/types/ && graph build",
+    "deploy": "graph deploy",
+    "prepare:mumbai": "mustache config/mumbai.json subgraph.yaml.mustache > subgraph.yaml",
+    "deploy:mumbai": "yarn clean && yarn prepare:mumbai && yarn codegen && yarn deploy --studio yqc-mumbai"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.24.1",
+    "@graphprotocol/graph-ts": "^0.24.1",
+    "mustache": "^4.2.0"
+  }
+}
