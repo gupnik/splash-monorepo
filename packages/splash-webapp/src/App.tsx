@@ -10,6 +10,7 @@ import NotFoundPage from './pages/NotFound';
 import { CHAIN_ID } from './config';
 import { useUserProjects } from './wrappers/splashProject';
 import HomePage from './pages/Home';
+import NavBar from './components/NavBar';
 
 function App() {
   const { account, chainId } = useEthers();
@@ -35,6 +36,7 @@ function App() {
         />
       )} */}
       <BrowserRouter>
+        <NavBar />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route component={NotFoundPage} />

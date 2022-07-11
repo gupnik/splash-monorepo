@@ -5,6 +5,8 @@ type SplashProject @entity {
 
   price: BigInt!
 
+  uri: String!
+
   constituents: [SplashProject!]
 }
 

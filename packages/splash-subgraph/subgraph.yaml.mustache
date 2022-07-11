@@ -24,7 +24,9 @@ dataSources:
         - name: SplashProject
           file: ../splash-contracts/abi/contracts/SplashProject.sol/SplashProject.json
       eventHandlers:
-        - event: ProjectCreated(indexed uint256,address,uint256)
+        - event: ProjectCreated(indexed uint256,address,uint256,string)
           handler: handleProjectCreated
+        - event: ProjectURIUpdated(indexed uint256,string)
+          handler: handleProjectURIUpdated
         - event: ConstituentAdded(indexed uint256,indexed uint256)
           handler: handleConstituentAdded

@@ -89,7 +89,7 @@ const ChainSubscriber: React.FC = () => {
       wsProvider,
     );
 
-    const projectFilter = splashProjectContract.filters.ProjectCreated(null, null, null);
+    const projectFilter = splashProjectContract.filters.ProjectCreated(null, null, null, null);
     const constituentFilter = splashProjectContract.filters.ConstituentAdded(null, null);
     const processProjectFilter = async (
       queenId: BigNumberish,

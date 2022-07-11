@@ -8,7 +8,7 @@ dataSources:
     name: SplashProject
     network: mumbai
     source:
-      address: '0xcd901A08EAEf9C9eB365efAAF8C97DFbBd273866'
+      address: '0xa14EBbd4b00f60942eCE0254e1A400CD567D5B50'
       abi: SplashProject
       startBlock: 27097241
     mapping:
@@ -24,7 +24,9 @@ dataSources:
         - name: SplashProject
           file: ../splash-contracts/abi/contracts/SplashProject.sol/SplashProject.json
       eventHandlers:
-        - event: ProjectCreated(indexed uint256,address,uint256)
+        - event: ProjectCreated(indexed uint256,address,uint256,string)
           handler: handleProjectCreated
+        - event: ProjectURIUpdated(indexed uint256,string)
+          handler: handleProjectURIUpdated
         - event: ConstituentAdded(indexed uint256,indexed uint256)
           handler: handleConstituentAdded
