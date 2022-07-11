@@ -12,5 +12,4 @@ export const useUserProjects = () => {
     method: 'numProjects',
     args: [],
   });
-  console.log(numProjects);
 }

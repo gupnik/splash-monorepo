@@ -29,9 +29,5 @@ type SplashLink @entity {
 type SplashAccount @entity {
   id: ID!
 
-  projectBalanceRaw: BigInt!
-
-  projectBalance: BigInt!
-
   projects: [SplashProject!]
 }

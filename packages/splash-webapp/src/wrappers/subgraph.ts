@@ -7,3 +7,15 @@ export const clientFactory = (uri: string) =>
     uri,
     cache: new InMemoryCache(),
   });
+
+export const projectsQuery = (account?: string) => gql`
+{
+  splashAccount(id: \"${account?.toLowerCase()}\") {
+    id
+    projects {
+      id
+      uri
+    }
+  }
+}
+`

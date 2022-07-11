@@ -8,8 +8,10 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import account from './state/slices/account';
 import application from './state/slices/application';
+import project from './state/slices/project';
+import projects, { setProjects } from './state/slices/projects';
 import { ApolloProvider, useQuery } from '@apollo/client';
-import { clientFactory } from './wrappers/subgraph';
+import { clientFactory, projectsQuery } from './wrappers/subgraph';
 import { useEffect } from 'react';
 import config, { CHAIN_ID, createNetworkHttpUrl } from './config';
 import { WebSocketProvider } from '@ethersproject/providers';
@@ -35,6 +37,8 @@ const createRootReducer = (history: History) =>
     router: connectRouter(history),
     account,
     application,
+    project,
+    projects
   });
 
 export default function configureStore(preloadedState: PreloadedState<any>) {
@@ -107,6 +111,18 @@ const ChainSubscriber: React.FC = () => {
   return <></>;
 };
 
+const Projects: React.FC = () => {
+  const account = useAppSelector(state => state.account);
+  const { data } = useQuery(projectsQuery(account.activeAccount));
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    data && dispatch(setProjects({ data }));
+  }, [data, account, dispatch]);
+
+  return <></>;
+};
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
@@ -119,6 +135,7 @@ ReactDOM.render(
         >
           <ApolloProvider client={client}>
             <DAppProvider config={useDappConfig}>
+              <Projects />
               <App />
               <Updaters />
             </DAppProvider>

@@ -7,7 +7,7 @@ const ShortAddress: React.FC<{ address: string; avatar?: boolean }> = props => {
   const { address, avatar } = props;
   const { library: provider } = useEthers();
 
-  const ens = useReverseENSLookUp(address);
+  const ens = null; // useReverseENSLookUp(address);
   const shortAddress = address && [address.substr(0, 4), address.substr(38, 4)].join('...');
 
   if (avatar) {
