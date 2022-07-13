@@ -1,22 +1,19 @@
 [context.production.environment]
-  REACT_APP_CHAIN_ID = "1"
+  REACT_APP_CHAIN_ID = "80001"
   REACT_APP_ENABLE_HISTORY = "true"
 
 [context."staging".environment]
-  REACT_APP_CHAIN_ID = "1"
+  REACT_APP_CHAIN_ID = "80001"
   REACT_APP_ENABLE_HISTORY = "true"
 
 [context."master".environment]
-  REACT_APP_CHAIN_ID = "1"
+  REACT_APP_CHAIN_ID = "80001"
   REACT_APP_ENABLE_HISTORY = "true"
 
 [context.deploy-preview.environment]
-  REACT_APP_CHAIN_ID = "1"
+  REACT_APP_CHAIN_ID = "80001"
   REACT_APP_ENABLE_HISTORY = "true"
 
-[functions]
-  directory = "packages/yqc-webapp/functions"
-
 [build]
-  command = "yarn workspace @yqc/webapp build"
-  publish = "packages/yqc-webapp/build"
+  command = "yarn workspace @splash/webapp build"
+  publish = "packages/splash-webapp/build"
