@@ -34,6 +34,13 @@
     "graphql": "^15.5.1",
     "ramda": "^0.27.1",
     "react": "^17.0.2",
+    "react-color": "^2.17.3",
+    "react-hotkeys": "^1.1.4",
+    "react-portal": "^4.2.0",
+    "react-autocomplete": "1.8.1",
+    "react-dropzone": "^10.1.4",
+    "react-hot-loader": "^4.8.4",
+    "rimraf": "^2.6.3",
     "react-bootstrap": "^2.0.0",
     "react-dom": "^17.0.2",
     "react-markdown": "^7.0.0",
@@ -45,7 +52,8 @@
     "redux-devtools-extension": "^2.13.9",
     "remark-breaks": "^3.0.1",
     "swiper": "6.8.4",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
