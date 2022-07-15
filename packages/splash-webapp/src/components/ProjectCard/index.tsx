@@ -5,6 +5,7 @@ import classes from './ShortAddress.module.css';
 import { ProjectState } from '../../state/slices/project';
 import { useEffect, useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 const ProjectCard: React.FC<{ project: ProjectState }> = props => {
   const { uri } = props.project;
@@ -18,6 +19,8 @@ const ProjectCard: React.FC<{ project: ProjectState }> = props => {
     loadProjectData();
   }, [uri])
 
+  const history = useHistory();
+
   return <>
       <Card>
         <Card.Img src={projectData.image ? projectData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : null} />
@@ -26,7 +29,7 @@ const ProjectCard: React.FC<{ project: ProjectState }> = props => {
           <Card.Text>
             Project Description
           </Card.Text>
-          <Button variant="primary">Open</Button>
+          <Button variant="primary" onClick={() => history.push("/project")}>Open</Button>
         </Card.Body>
         <Card.Footer>
           <small className="text-muted">Last updated 3 mins ago</small>

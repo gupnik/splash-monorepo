@@ -4,9 +4,6 @@ import { Button, Card, CardGroup, CardImg, Row } from "react-bootstrap";
 import ProjectCard from "../../components/ProjectCard";
 import config from "../../config";
 import { useAppSelector } from "../../hooks";
-// import Designer, {Text, Rect} from '@splash/designer';
-import Designer from "../../designer/Designer";
-import { Rect, Text} from "../../designer/objects";
 import { useState } from "react";
 
 interface HomePageProps {
@@ -25,11 +22,6 @@ const HomePage: React.FC<HomePageProps> = props => {
     'create',
   );
 
-  const [objects, setObjects] = useState<any>([
-    // {type: "text", x: 10, y: 20, text: "Hello!", fill: "red"},
-    {type: "rect", x: 50, y: 50, width: 50, height: 50, fill: "red"}
-  ])
-
   return (
     <>
     <Button onClick={() => {
@@ -42,14 +34,6 @@ const HomePage: React.FC<HomePageProps> = props => {
         <ProjectCard project={project} key={indx} />
       ))}
     </Row>
-    <Designer 
-      width={250} height={350}
-      objectTypes={{
-        'text': Text,
-        'rect': Rect
-      }}
-      onUpdate={(objects: any) => {setObjects(objects)}}
-      objects={objects}/>
     </>
   )
 }

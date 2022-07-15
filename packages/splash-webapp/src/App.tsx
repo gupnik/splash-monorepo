@@ -11,6 +11,7 @@ import { CHAIN_ID } from './config';
 import { useUserProjects } from './wrappers/splashProject';
 import HomePage from './pages/Home';
 import NavBar from './components/NavBar';
+import ProjectPage from './pages/Project';
 
 function App() {
   const { account, chainId } = useEthers();
@@ -39,6 +40,7 @@ function App() {
         <NavBar />
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route path="/project" component={ProjectPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
