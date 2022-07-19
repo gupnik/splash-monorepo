@@ -11,7 +11,7 @@ const ProjectCard: React.FC<{ project: ProjectState }> = props => {
   useEffect(() => {
     const loadProjectData = async () => {
       try {
-        const response = await fetch(uri.replace("ipfs://", "https://gateway.moralisipfs.com/ipfs/"), {
+        const response = await fetch(uri.replace("ipfs://", "https://ipfs.io/ipfs/"), {
           // mode: 'no-cors'
         });
         const data = await response.json();
@@ -26,7 +26,7 @@ const ProjectCard: React.FC<{ project: ProjectState }> = props => {
 
   return <>
       <Card>
-        <Card.Img src={projectData.image ? projectData.image.replace("ipfs://", "https://gateway.moralisipfs.com/ipfs/") : null} />
+        <Card.Img src={projectData.image ? projectData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : null} />
         <Card.Body>
           <Card.Title>{projectData["name"]}</Card.Title>
           <Card.Text>
