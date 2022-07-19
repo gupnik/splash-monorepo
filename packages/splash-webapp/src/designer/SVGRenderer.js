@@ -38,7 +38,7 @@ class SVGRenderer extends Component {
     };
 
     return (
-      <svg onMouseDown={onMouseDown}
+      <svg id="project-svg" xmlns="http://www.w3.org/2000/svg" onMouseDown={onMouseDown}
          ref={onRender}
          width={width}
          height={height}

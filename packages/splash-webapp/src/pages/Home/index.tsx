@@ -1,10 +1,9 @@
 import { SplashProjectFactory } from "@splash/sdk";
 import { useContractFunction } from "@usedapp/core";
-import { Button, Card, CardGroup, CardImg, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import ProjectCard from "../../components/ProjectCard";
 import config from "../../config";
 import { useAppSelector } from "../../hooks";
-import { useState } from "react";
 
 interface HomePageProps {
   

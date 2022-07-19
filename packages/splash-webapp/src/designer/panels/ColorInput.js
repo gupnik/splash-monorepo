@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import { SketchPicker } from 'react-color';
-import _ from 'lodash';
-import Icon from '../Icon';
-
 import styles from './styles';
 
 class ColorInput extends Component {

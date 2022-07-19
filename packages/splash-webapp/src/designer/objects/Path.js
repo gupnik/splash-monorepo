@@ -1,8 +1,5 @@
-import React, {Component} from 'react';
 import {modes} from '../constants';
 import Icon from '../Icon';
-import _ from 'lodash';
-
 import Vector from './Vector';
 import BezierEditor from '../editors/BezierEditor';
 

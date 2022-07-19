@@ -1,14 +1,13 @@
 import { SplashProjectFactory } from "@splash/sdk";
 import { useContractFunction } from "@usedapp/core";
-import { Button, Card, CardGroup, CardImg, Row } from "react-bootstrap";
-import ProjectCard from "../../components/ProjectCard";
+import { Button } from "react-bootstrap";
 import config from "../../config";
-import { useAppSelector } from "../../hooks";
-// import Designer, {Text, Rect} from '@splash/designer';
 import Designer from "../../designer/Designer";
-import { Rect, Text} from "../../designer/objects";
+import { Rect, Text, Image } from "../../designer/objects";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Moralis from "moralis";
+import { svgToPng } from "./utils";
 
 interface ProjectPageProps {
   
@@ -21,11 +20,9 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
     config.addresses.splashProject,
   );
 
-  const projects = useAppSelector(state => state.projects.projects);
-
-  const { send: createProject, state: createProjectState } = useContractFunction(
+  const { send: updateURI, state: updateURIState } = useContractFunction(
     splashProjectContract,
-    'create',
+    'updateURI',
   );
 
   const [objects, setObjects] = useState<any>([
@@ -33,17 +30,48 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
     {type: "rect", x: 50, y: 50, width: 50, height: 50, fill: "red"}
   ])
 
+  const onExit = async () => {
+    const svgElement = document.getElementById('project-svg')!;
+
+    svgToPng(svgElement.outerHTML, async (base64PNG: string) => {
+      const imageFile = new Moralis.File("image.png", { base64: base64PNG });
+      const imageResult = await imageFile.saveIPFS();
+      const imageIPFS = (imageResult as any).ipfs();
+      console.log(imageIPFS);
+      const imageHash = (imageResult as any).hash();
+
+      const metadata = {
+        name: "Project 1",
+        description: "Here we are!",
+        "image": `ipfs://${imageHash}`,
+        "attributes": []
+      }
+
+       const metadataFile = new Moralis.File("data.json", {
+          base64: btoa(JSON.stringify(metadata)),
+        }, "application/json");
+        const metadataResult = await metadataFile.saveIPFS();
+        const metadataIPFS = (metadataResult as any).ipfs();
+        console.log(metadataIPFS);
+        const metadataHash = (metadataResult as any).hash();
+
+        await updateURI(1, `ipfs://${metadataHash}`); //`ipfs://${hash}`
+        history.goBack();
+    });
+  };
+ 
   return (
     <>
     <Designer 
       width={250} height={350}
       objectTypes={{
+        'image': Image,
         'text': Text,
         'rect': Rect
       }}
       onUpdate={(objects: any) => {setObjects(objects)}}
       objects={objects}/>
-    <Button onClick={() => history.goBack()}>Exit</Button>
+    <Button onClick={() => onExit()}>{updateURIState.status === "Mining" ? "Mining..." : "Exit"}</Button>
     </>
   )
 }

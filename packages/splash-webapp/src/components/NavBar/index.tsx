@@ -3,7 +3,7 @@ import ShortAddress from '../ShortAddress';
 import classes from './NavBar.module.css';
 import logo from '../../assets/Splash.png';
 import { useState } from 'react';
-import { useEtherBalance, useEthers } from '@usedapp/core';
+import { useEthers } from '@usedapp/core';
 import WalletConnectModal from '../WalletConnectModal';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar, Container } from 'react-bootstrap';

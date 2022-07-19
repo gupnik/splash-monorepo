@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import _ from 'lodash';
-// import {HotKeys} from 'react-hotkeys';
-import Icon from './Icon';
-
 import InsertMenu from './panels/InsertMenu';
 import SVGRenderer from './SVGRenderer';
 import Handler from './Handler';
@@ -117,7 +113,7 @@ class Designer extends Component {
       var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
           var r = (d + Math.random()*16)%16 | 0;
           d = Math.floor(d/16);
-          return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+          return (c === 'x' ? r : (r&0x3|0x8)).toString(16);
       });
       return uuid;
   }
@@ -297,7 +293,6 @@ class Designer extends Component {
 
   detectOverlappedObjects(event) {
     let {currentObjectIndex} = this.state;
-    let {objects} = this.props;
     let mouse = this.getMouseCoords(event);
 
     let refs = this.objectRefs,
@@ -376,8 +371,8 @@ class Designer extends Component {
 
   renderSVG() {
     let canvas = this.getCanvas();
-    let {width, height, canvasOffsetX, canvasOffsetY} = canvas;
-    let {background, objects, svgStyle, objectTypes} = this.props;
+    let {width, height} = canvas;
+    let {background, objects, objectTypes} = this.props;
     
     return (
       <SVGRenderer
@@ -510,7 +505,7 @@ class Designer extends Component {
         isEditMode = mode === modes.EDIT_OBJECT,
         showPropertyPanel = selectedObjectIndex !== null;
 
-    let {width, height, canvasWidth, canvasHeight} = this.getCanvas();
+    let {width, height} = this.getCanvas();
 
     let objectComponent, objectWithInitial, ObjectEditor;
     if (currentObject) {

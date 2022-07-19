@@ -6,7 +6,7 @@ import config from "../config";
 const abi = new utils.Interface(SplashProjectABI);
 
 export const useUserProjects = () => {
-  const numProjects = useContractCall<EthersBN>({
+  return useContractCall<EthersBN>({
     abi,
     address: config.addresses.splashProject,
     method: 'numProjects',

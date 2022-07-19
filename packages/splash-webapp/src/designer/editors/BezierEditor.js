@@ -70,7 +70,7 @@ class BezierEditor extends Component {
 
   onMouseMove(event) {
     let {mode} = this.state;
-    let currentPath = this.getCurrentPath();
+    // let currentPath = this.getCurrentPath();
     let mouse = this.getMouseCoords(event);
     let {object} = this.props;
     let {moveX, moveY} = object;
@@ -228,8 +228,6 @@ class BezierEditor extends Component {
       return;
     }
 
-    let mouse = this.getMouseCoords(event);
-
     this.setState({
       mode: 'move',
       movedPathIndex: pathIndex,
@@ -246,8 +244,6 @@ class BezierEditor extends Component {
 
   render() {
     let {object, width, height} = this.props;
-    let {path} = object;
-    let {state} = this;
 
     let {moveX, moveY, x, y} = object;
 

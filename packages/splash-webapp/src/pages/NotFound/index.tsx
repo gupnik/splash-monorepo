@@ -1,4 +1,4 @@
-import { Col, Image } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import Section from '../../layout/Section';
 import classes from './NotFound.module.css';
 

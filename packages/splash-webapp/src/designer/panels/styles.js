@@ -1,4 +1,4 @@
-export default {
+const styles = {
   propertyPanel: {
     position: 'relative',
     width: 240,
@@ -117,3 +117,5 @@ export default {
     cursor: 'default'
   },
 };
+
+export default styles;

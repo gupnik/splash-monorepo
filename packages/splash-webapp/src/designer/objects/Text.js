@@ -1,8 +1,4 @@
-import React, {Component} from 'react';
-import {modes} from '../constants';
 import Icon from '../Icon';
-import _ from 'lodash';
-
 import Vector from './Vector';
 import WebFont from 'webfontloader';
 
@@ -39,13 +35,13 @@ export default class Text extends Vector {
   }
 
   render() {
-    let {object, index} = this.props;
+    let {object} = this.props;
     WebFont.load({
       google: {
         families: [object.fontFamily]
       }
     });
-    const {rotate, ... restOfAttributes} = this.getObjectAttributes()
+    const {rotate, ...restOfAttributes} = this.getObjectAttributes()
     return (
       <text style={this.getStyle()}
          {...restOfAttributes}

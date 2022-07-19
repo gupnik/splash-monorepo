@@ -1,19 +1,13 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-
-import Icon from '../Icon';
-
-import styles from './styles';
 import PropertyGroup from './PropertyGroup';
-import Button from './Button';
-import SwitchState from './SwitchState';
 import Columns from './Columns';
 import Column from './Column';
 import Dropzone from 'react-dropzone';
 
 export default class ImagePanel extends Component {
   onDrop (acceptedFiles) {
-    if (acceptedFiles.length == 0) {
+    if (acceptedFiles.length === 0) {
       return;
     }
 

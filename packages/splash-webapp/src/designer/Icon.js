@@ -103,6 +103,8 @@ export default class Icon extends Component {
             <rect x={1} y={1} width={13} height={13} fill="#ababab" stroke="black" strokeWidth={1} />
           </g>
         );
+      default:
+        return (<g></g>);
     }
   }
   render() {

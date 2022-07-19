@@ -8,10 +8,11 @@ import classes from './App.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NotFoundPage from './pages/NotFound';
 import { CHAIN_ID } from './config';
-import { useUserProjects } from './wrappers/splashProject';
 import HomePage from './pages/Home';
 import NavBar from './components/NavBar';
 import ProjectPage from './pages/Project';
+import AlertModal from './components/Modal';
+import NetworkAlert from './components/NetworkAlert';
 
 function App() {
   const { account, chainId } = useEthers();
@@ -24,18 +25,16 @@ function App() {
 
   const alertModal = useAppSelector(state => state.application.alertModal);
 
-  const projects = useUserProjects();
-
   return (
     <div className={`${classes.wrapper}`}>
-      {/* {Number(CHAIN_ID) !== chainId && <NetworkAlert />}
+      {Number(CHAIN_ID) !== chainId && <NetworkAlert />}
       {alertModal.show && (
         <AlertModal
           title={alertModal.title}
           content={<p>{alertModal.message}</p>}
           onDismiss={() => dispatch(setAlertModal({ ...alertModal, show: false }))}
         />
-      )} */}
+      )}
       <BrowserRouter>
         <NavBar />
         <Switch>

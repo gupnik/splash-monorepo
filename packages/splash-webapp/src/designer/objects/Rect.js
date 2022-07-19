@@ -1,8 +1,4 @@
-import React, {Component} from 'react';
-import {modes} from '../constants';
 import Icon from '../Icon';
-import _ from 'lodash';
-
 import Vector from './Vector';
 
 export default class Rect extends Vector {
@@ -20,7 +16,7 @@ export default class Rect extends Vector {
   };
 
   render() {
-    let {object, index} = this.props;
+    let {object} = this.props;
     return (
       <rect style={this.getStyle()}
          {...this.getObjectAttributes()}

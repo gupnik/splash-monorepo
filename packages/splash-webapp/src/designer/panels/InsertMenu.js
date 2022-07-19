@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames';
 import Icon from '../Icon';
 
 class InsertMenu extends Component {
@@ -26,7 +24,7 @@ class InsertMenu extends Component {
   }
 
   unhoverTool = type => {
-    if (this.state.hoveredTool == type) {
+    if (this.state.hoveredTool === type) {
       this.setState({hoveredTool: null})
     }
   }

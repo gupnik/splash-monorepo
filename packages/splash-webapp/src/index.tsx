@@ -14,9 +14,6 @@ import { ApolloProvider, useQuery } from '@apollo/client';
 import { clientFactory, projectsQuery } from './wrappers/subgraph';
 import { useEffect } from 'react';
 import config, { CHAIN_ID, createNetworkHttpUrl } from './config';
-import { WebSocketProvider } from '@ethersproject/providers';
-import { BigNumber, BigNumberish } from 'ethers';
-import { SplashProjectFactory } from '@splash/sdk';
 import dotenv from 'dotenv';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { ConnectedRouter, connectRouter } from 'connected-react-router';
@@ -25,8 +22,7 @@ import { applyMiddleware, createStore, combineReducers, PreloadedState } from 'r
 import { routerMiddleware } from 'connected-react-router';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { projectPath } from './utils/history';
-import { push } from 'connected-react-router';
+import { MoralisProvider } from "react-moralis";
 
 dotenv.config();
 
@@ -81,32 +77,30 @@ const Updaters = () => {
   );
 };
 
-const BLOCKS_PER_DAY = 6_500;
-
 const ChainSubscriber: React.FC = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  const loadState = async () => {
-    const wsProvider = new WebSocketProvider(config.app.wsRpcUri);
-    const splashProjectContract = SplashProjectFactory.connect(
-      config.addresses.splashProject,
-      wsProvider,
-    );
+  // const loadState = async () => {
+  //   const wsProvider = new WebSocketProvider(config.app.wsRpcUri);
+  //   const splashProjectContract = SplashProjectFactory.connect(
+  //     config.addresses.splashProject,
+  //     wsProvider,
+  //   );
 
-    const projectFilter = splashProjectContract.filters.ProjectCreated(null, null, null, null);
-    const constituentFilter = splashProjectContract.filters.ConstituentAdded(null, null);
-    const processProjectFilter = async (
-      queenId: BigNumberish,
-      sender: string,
-      value: BigNumberish,
-      event: any,
-    ) => {
-      const timestamp = (await event.getBlock()).timestamp;
-      const transactionHash = event.transactionHash;
-      // dispatch( );
-    };
-  };
-  loadState();
+  //   const projectFilter = splashProjectContract.filters.ProjectCreated(null, null, null, null);
+  //   const constituentFilter = splashProjectContract.filters.ConstituentAdded(null, null);
+  //   const processProjectFilter = async (
+  //     queenId: BigNumberish,
+  //     sender: string,
+  //     value: BigNumberish,
+  //     event: any,
+  //   ) => {
+  //     const timestamp = (await event.getBlock()).timestamp;
+  //     const transactionHash = event.transactionHash;
+  //     // dispatch( );
+  //   };
+  // };
+  // loadState();
 
   return <></>;
 };
@@ -135,11 +129,13 @@ ReactDOM.render(
         >
           <ApolloProvider client={client}>
             <DAppProvider config={useDappConfig}>
-              <Projects />
-              <App />
-              <Updaters />
+                <Projects />
+                <MoralisProvider serverUrl="https://1pwccqwdxtwq.usemoralis.com:2053/server" appId="rAiqr5wWWnZwl8tVdgylIyoqLq26htRDEqpMCCMI">
+                <App />
+                </MoralisProvider>
+                <Updaters />
             </DAppProvider>
-          </ApolloProvider>
+          </ApolloProvider> 
         </Web3ReactProvider>
       </React.StrictMode>
     </ConnectedRouter>

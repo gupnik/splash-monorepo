@@ -1,7 +1,4 @@
-import React, {Component} from 'react';
-import _ from 'lodash';
-import Icon from '../Icon';
-
+import React from 'react';
 import styles from './styles';
 
 const Button = ({onClick, ...props}) => {
