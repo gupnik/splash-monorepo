@@ -62,7 +62,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         :
         <Grid container spacing={2}>
             {projects.map((project, indx) => (
-                <ProjectCard project={project} key={indx} />
+                <ProjectCard project={project} key={indx} isHome={true} />
             ))}
         </Grid>
         }

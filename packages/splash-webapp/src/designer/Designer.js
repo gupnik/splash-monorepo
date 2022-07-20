@@ -524,8 +524,8 @@ class Designer extends Component {
       //   style={styles.keyboardManager}
       //   handlers={this.getKeymapHandlers()}>
         <Stack direction="row" 
-          spacing={2}
-          justifyContent="center"
+          spacing={1}
+          justifyContent="flex-start"
             //  style={{
             //     ...styles.container,
             //     ...this.props.style,

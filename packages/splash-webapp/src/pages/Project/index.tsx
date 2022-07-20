@@ -7,7 +7,9 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Moralis from "moralis";
 import { svgToPng } from "./utils";
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, Typography } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, Grid, Stack, Typography } from "@mui/material";
+import { useAppSelector } from "../../hooks";
+import ProjectCard from "../../components/ProjectCard";
 
 interface ProjectPageProps {
   
@@ -15,6 +17,7 @@ interface ProjectPageProps {
 
 const ProjectPage: React.FC<ProjectPageProps> = props => {
   const history = useHistory();
+  const projects = useAppSelector(state => state.projects.projects);
 
   const splashProjectContract = new SplashProjectFactory().attach(
     config.addresses.splashProject,
@@ -62,17 +65,19 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
  
   return (
     <>
-    <Designer 
-      width={250} height={350}
-      objectTypes={{
-        'image': Image,
-        'text': Text,
-        'rect': Rect
-      }}
-      onUpdate={(objects: any) => {setObjects(objects)}}
-      objects={objects}/>
-      <Box height={40}/>
-      <Card sx={{ maxWidth: 345 }}>
+    <Stack direction="row" >
+      <Stack>
+        <Designer 
+        width={250} height={350}
+        objectTypes={{
+          'image': Image,
+          'text': Text,
+          'rect': Rect
+        }}
+        onUpdate={(objects: any) => {setObjects(objects)}}
+        objects={objects}/>
+        <Box height={40}/>
+        <Card sx={{ maxWidth: 345 }}>
             <CardActionArea>
                 {/* <CardMedia
                     component="img"
@@ -96,6 +101,14 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
                 </CardActions>
             </CardActionArea>
         </Card>
+      </Stack>
+        <Box width={40}/>
+        <Grid container spacing={2}>
+            {projects.map((project, indx) => (
+                <ProjectCard project={project} key={indx} isHome={false} />
+            ))}
+        </Grid>
+    </Stack>
     {/* <Button onClick={() => onExit()}>{updateURIState.status === "Mining" ? "Mining..." : "Exit"}</Button> */}
     </>
   )

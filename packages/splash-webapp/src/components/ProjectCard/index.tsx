@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Divider, Grid, Stack, Typography } from "@mui/material"
 
 
-const ProjectCard: React.FC<{ project: ProjectState }> = props => {
+const ProjectCard: React.FC<{ project: ProjectState, isHome: Boolean }> = props => {
   const { uri } = props.project;
   const history = useHistory();
   const [projectData, setProjectData] = useState<any>({});
@@ -44,8 +44,12 @@ const ProjectCard: React.FC<{ project: ProjectState }> = props => {
                     </Typography> */}
                 </CardContent>
                 <CardActions>
-                    <Button size="small" color="primary" onClick={() => history.push("/project")}>
-                    Edit
+                    <Button size="small" color="primary" onClick={() => {
+                      if (props.isHome) {
+                        history.push("/project");
+                      }
+                    }}>
+                    {props.isHome ? "EDIT" : "ADD"}
                     </Button>
                 </CardActions>
             </CardActionArea>
