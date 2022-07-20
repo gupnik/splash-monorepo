@@ -1,7 +1,8 @@
 import { ProjectState } from '../../state/slices/project';
 import { useEffect, useState } from 'react';
-import { Button, Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Divider, Grid, Stack, Typography } from "@mui/material"
+
 
 const ProjectCard: React.FC<{ project: ProjectState }> = props => {
   const { uri } = props.project;
@@ -24,21 +25,33 @@ const ProjectCard: React.FC<{ project: ProjectState }> = props => {
     loadProjectData();
   }, [uri])
 
-  return <>
-      <Card>
-        <Card.Img src={projectData.image ? projectData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : null} />
-        <Card.Body>
-          <Card.Title>{projectData["name"]}</Card.Title>
-          <Card.Text>
-          {projectData["description"]}
-          </Card.Text>
-          <Button variant="primary" onClick={() => history.push("/project")}>Open</Button>
-        </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
-    </>;
+  return (
+    <Grid item>
+        <Card sx={{ maxWidth: 345 }}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    sx={{ width: 200, height: 200, objectFit: 'contain' }}
+                    image={projectData.image ? projectData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : null}
+                    alt="green iguana"
+                />
+                <CardContent style={{ backgroundColor: "lightgray" }}>
+                    <Typography gutterBottom variant="body2" component="div" textAlign={"center"}>
+                        {projectData["name"]}
+                    </Typography>
+                    {/* <Typography variant="body2" color="text.secondary">
+                        {projectData["description"]}
+                    </Typography> */}
+                </CardContent>
+                <CardActions>
+                    <Button size="small" color="primary" onClick={() => history.push("/project")}>
+                    Edit
+                    </Button>
+                </CardActions>
+            </CardActionArea>
+        </Card>
+    </Grid>
+  )
 };
 
 export default ProjectCard;

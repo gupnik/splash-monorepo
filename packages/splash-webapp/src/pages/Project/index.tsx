@@ -1,6 +1,5 @@
 import { SplashProjectFactory } from "@splash/sdk";
 import { useContractFunction } from "@usedapp/core";
-import { Button } from "react-bootstrap";
 import config from "../../config";
 import Designer from "../../designer/Designer";
 import { Rect, Text, Image } from "../../designer/objects";
@@ -8,6 +7,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Moralis from "moralis";
 import { svgToPng } from "./utils";
+import { Button } from "@mui/material";
 
 interface ProjectPageProps {
   

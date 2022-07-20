@@ -1,9 +1,9 @@
 import { SplashProjectFactory } from "@splash/sdk";
 import { useContractFunction } from "@usedapp/core";
-import { Button, Row } from "react-bootstrap";
 import ProjectCard from "../../components/ProjectCard";
 import config from "../../config";
 import { useAppSelector } from "../../hooks";
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CircularProgress, Divider, Grid, Stack, Typography } from "@mui/material";
 
 interface HomePageProps {
   
@@ -22,18 +22,51 @@ const HomePage: React.FC<HomePageProps> = props => {
   );
 
   return (
-    <>
-    <Button onClick={() => {
-      if (createProjectState.status !== "Mining") { 
-        createProject(10)
-      }
-    }}>{createProjectState.status === "Mining" ? "Mining..." : "Create"} </Button>
-    <Row xs={1} md={3}>
-      {projects.map((project, indx) => (
-        <ProjectCard project={project} key={indx} />
-      ))}
-    </Row>
-    </>
+    <Stack padding={"10px"}>
+        <Box height={40}/>
+        <Card sx={{ maxWidth: 345 }}>
+            <CardActionArea>
+                {/* <CardMedia
+                    component="img"
+                    height="140"
+                    // image="/static/images/cards/contemplative-reptile.jpg"
+                    alt="green iguana"
+                /> */}
+                <CardContent style={{ backgroundColor: "lightgray" }}>
+                    <Typography variant="body2" color="text.secondary">
+                        Click CREATE to create a new project!
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button size="small" color="primary" onClick={() => {
+                            if (createProjectState.status !== "Mining") { 
+                              createProject(10)
+                            }                          
+                    }}>
+                    {createProjectState.status === "Mining" ? "Mining..." : "Create"} 
+                    </Button>
+                </CardActions>
+            </CardActionArea>
+        </Card>
+        <Box height={40}/>
+        <Typography variant="h5">
+            My Projects
+        </Typography>
+        <Divider />
+        <Box height={40}/>
+        { projects == null 
+        ? 
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <CircularProgress />
+        </div>
+        :
+        <Grid container spacing={2}>
+            {projects.map((project, indx) => (
+                <ProjectCard project={project} key={indx} />
+            ))}
+        </Grid>
+        }
+    </Stack>
   )
 }
 
