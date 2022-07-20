@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Moralis from "moralis";
 import { svgToPng } from "./utils";
-import { Button } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, Typography } from "@mui/material";
 
 interface ProjectPageProps {
   
@@ -71,7 +71,32 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
       }}
       onUpdate={(objects: any) => {setObjects(objects)}}
       objects={objects}/>
-    <Button onClick={() => onExit()}>{updateURIState.status === "Mining" ? "Mining..." : "Exit"}</Button>
+      <Box height={40}/>
+      <Card sx={{ maxWidth: 345 }}>
+            <CardActionArea>
+                {/* <CardMedia
+                    component="img"
+                    height="140"
+                    // image="/static/images/cards/contemplative-reptile.jpg"
+                    alt="green iguana"
+                /> */}
+                <CardContent style={{ backgroundColor: "lightgray" }}>
+                    <Typography variant="body2" color="text.secondary">
+                        Click EXIT to exit the project!
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button size="small" color="primary" onClick={() => {
+                            if (updateURIState.status !== "Mining") { 
+                              onExit()
+                            }                          
+                    }}>
+                    {updateURIState.status === "Mining" ? "Mining..." : "Exit"} 
+                    </Button>
+                </CardActions>
+            </CardActionArea>
+        </Card>
+    {/* <Button onClick={() => onExit()}>{updateURIState.status === "Mining" ? "Mining..." : "Exit"}</Button> */}
     </>
   )
 }

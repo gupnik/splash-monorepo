@@ -26,7 +26,7 @@ function App() {
   const alertModal = useAppSelector(state => state.application.alertModal);
 
   return (
-    <div className={`${classes.wrapper}`}>
+    <div className={`${classes.wrapper}`} style={{ backgroundColor: "#efe5da" }}>
       {Number(CHAIN_ID) !== chainId && <NetworkAlert />}
       {alertModal.show && (
         <AlertModal

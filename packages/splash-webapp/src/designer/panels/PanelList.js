@@ -6,7 +6,7 @@ class PanelList extends Component {
     let {objectComponent, id} = this.props;
     return (
       <div style={{...styles.propertyPanel}}>
-        {objectComponent.panels.map((Panel, i) => <Panel key={i} id={id} {...this.props} />)}
+        {objectComponent && objectComponent.panels.map((Panel, i) => <Panel key={i} id={id} {...this.props} />)}
       </div>
     );
   }

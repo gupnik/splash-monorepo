@@ -7,6 +7,7 @@ import {modes} from './constants';
 import * as actions from './actions';
 import {Text, Path, Rect, Circle, Image} from './objects';
 import PanelList from './panels/PanelList';
+import { Divider, Stack } from '@mui/material';
 
 class Designer extends Component {
   static defaultProps = {
@@ -522,12 +523,14 @@ class Designer extends Component {
       //   keyMap={this.keyMap}
       //   style={styles.keyboardManager}
       //   handlers={this.getKeymapHandlers()}>
-        <div className={'container'}
-             style={{
-                ...styles.container,
-                ...this.props.style,
-                padding: 0
-             }}
+        <Stack direction="row" 
+          spacing={2}
+          justifyContent="center"
+            //  style={{
+            //     ...styles.container,
+            //     ...this.props.style,
+            //     padding: 0
+            //  }}
              onMouseMove={this.onDrag.bind(this)}
              onMouseUp={this.stopDrag.bind(this)}>
 
@@ -565,7 +568,7 @@ class Designer extends Component {
           </div>
 
           {/* Right Panel: Displays text, styling and sizing tools */}
-          {showPropertyPanel && (
+          {(
             <PanelList
               id={this.props.id}
               object={objectWithInitial}
@@ -573,7 +576,7 @@ class Designer extends Component {
               onChange={this.handleObjectChange.bind(this)}
               objectComponent={objectComponent} />
           )}
-        </div>
+        </Stack>
       // </HotKeys>
     );
   }
