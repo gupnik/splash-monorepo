@@ -31,7 +31,8 @@ function svgUrlToPng(svgUrl, callback) {
 
     // console.log(base64PNG);
     // const imgData = canvas.toDataURL('image/png');
-
+    
+    document.body.removeChild(svgImage);
     dataUrlToFile(png, "Test.png").then(file => callback(file));
   };
   svgImage.onerror = (e) => {

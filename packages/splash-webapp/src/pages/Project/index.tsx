@@ -53,7 +53,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
 
       let { ipfsHash: jsonHash } = await uploadJSONToIPFS(metadata); 
 
-      await updateURI(1, `ipfs://${jsonHash}`); 
+      await updateURI(id, `ipfs://${jsonHash}`); 
       history.goBack();
     });
 
