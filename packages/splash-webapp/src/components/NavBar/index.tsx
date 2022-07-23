@@ -73,7 +73,7 @@ const NavBar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" className={classes.navToggle} />
           <Navbar.Collapse className="justify-content-end">
-            <Nav.Link
+            {/* <Nav.Link
               href={"/"}
               className={classes.nounsNavLink}
               target="_blank"
@@ -91,7 +91,7 @@ const NavBar = () => {
             </Nav.Link>
             <Nav.Link as={Link} to="/playground" className={classes.nounsNavLink}>
               PLAYGROUND
-            </Nav.Link>
+            </Nav.Link> */}
             {activeAccount ? connectedContent : disconnectedContent}
           </Navbar.Collapse>
         </Container>
