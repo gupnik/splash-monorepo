@@ -25,14 +25,24 @@ function svgUrlToPng(svgUrl, callback) {
 
     let png = canvas.toDataURL(); 
 
-    const idx = png.indexOf('base64,') + 'base64,'.length;
-    const base64PNG = png.substring(idx);
+    // const idx = png.indexOf('base64,') + 'base64,'.length;
+    // const base64PNG = png.substring(idx);
+    // callback(base64PNG);
+
     // console.log(base64PNG);
     // const imgData = canvas.toDataURL('image/png');
-    callback(base64PNG);
+
+    dataUrlToFile(png, "Test.png").then(file => callback(file));
   };
   svgImage.onerror = (e) => {
     console.log(e);
   }
   svgImage.src = svgUrl;
+}
+
+async function dataUrlToFile(dataUrl, fileName) {
+
+  const res = await fetch(dataUrl);
+  const blob = await res.blob();
+  return new File([blob], fileName, { type: 'image/png' });
 }

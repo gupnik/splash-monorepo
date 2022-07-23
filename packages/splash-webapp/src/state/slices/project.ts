@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 export interface ProjectState {
+  id: string;
   uri: string;
+  data: any;
 }
 
 const initialState: ProjectState = {
-  uri: "https://ipfs.io/ipfs/QmVFKiZ48nq9F343UY4Ykiirnfqd4MYm8Qydz1ifGbbR6C"
+  id: '0',
+  uri: "https://ipfs.io/ipfs/QmVFKiZ48nq9F343UY4Ykiirnfqd4MYm8Qydz1ifGbbR6C",
+  data: {}
 }
 
 export const projectSlice = createSlice({

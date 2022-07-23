@@ -2,12 +2,15 @@ import { ProjectState } from '../../state/slices/project';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Divider, Grid, Stack, Typography } from "@mui/material"
+import { setProjectData } from '../../state/slices/projects';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 
 const ProjectCard: React.FC<{ project: ProjectState, isHome: Boolean }> = props => {
-  const { uri } = props.project;
+  const { id, uri } = props.project;
   const history = useHistory();
-  const [projectData, setProjectData] = useState<any>({});
+  const projectData: any = useAppSelector(state => state.projects.projects[id].data);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const loadProjectData = async () => {
@@ -16,7 +19,7 @@ const ProjectCard: React.FC<{ project: ProjectState, isHome: Boolean }> = props 
           // mode: 'no-cors'
         });
         const data = await response.json();
-        setProjectData(data);   
+        dispatch(setProjectData({ id, data }));
       } catch (error) {
         
       }
@@ -33,7 +36,6 @@ const ProjectCard: React.FC<{ project: ProjectState, isHome: Boolean }> = props 
                     component="img"
                     sx={{ width: 200, height: 200, objectFit: 'contain' }}
                     image={projectData.image ? projectData.image.replace("ipfs://", "https://ipfs.io/ipfs/") : null}
-                    alt="green iguana"
                 />
                 <CardContent style={{ backgroundColor: "lightgray" }}>
                     <Typography gutterBottom variant="body2" component="div" textAlign={"center"}>
@@ -46,7 +48,7 @@ const ProjectCard: React.FC<{ project: ProjectState, isHome: Boolean }> = props 
                 <CardActions>
                     <Button size="small" color="primary" onClick={() => {
                       if (props.isHome) {
-                        history.push("/project");
+                        history.push(`/project/${id}`);
                       }
                     }}>
                     {props.isHome ? "EDIT" : "ADD"}

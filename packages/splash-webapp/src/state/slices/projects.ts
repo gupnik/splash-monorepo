@@ -2,23 +2,26 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProjectState } from "./project";
 
 interface ProjectsState {
-  projects: ProjectState[];
+  projects:  { [id: string]: ProjectState};
 }
 
 const initialState: ProjectsState = {
-  projects: [],
+  projects: {},
 }
 
-const reduxSafeSetProjects = (data: any): ProjectState[] => {
-  if (!data.data.splashAccount) return [];
+const reduxSafeSetProjects = (data: any): ProjectsState => {
+  if (!data.data.splashAccount) return { projects: {} };
   const projects = data.data.splashAccount.projects as any[];
-  if (projects.length < 0) return [];
-  const projectStates: ProjectState[] = projects.map(project => {
-    return {
-      uri: project.uri
+  if (projects.length < 0) return { projects: {} };
+  let state: ProjectsState = { projects: {} };
+  projects.forEach(project => {
+    state.projects[project.id] = {
+      id: project.id,
+      uri: project.uri,
+      data: {}
     };
   });
-  return projectStates;
+  return state;
 };
 
 const projectsSlice = createSlice({
@@ -26,11 +29,14 @@ const projectsSlice = createSlice({
   initialState: initialState,
   reducers: {
     setProjects: (state, action: PayloadAction<any>) => {
-      state.projects = reduxSafeSetProjects(action.payload);
+      state.projects = reduxSafeSetProjects(action.payload).projects;
     },
+    setProjectData: (state, action: PayloadAction<{ id: string, data: any }>) => {
+      state.projects[action.payload.id].data = action.payload.data;
+    }
   }
 });
 
-export const { setProjects } = projectsSlice.actions;
+export const { setProjects, setProjectData } = projectsSlice.actions;
 
 export default projectsSlice.reducer;

@@ -22,7 +22,6 @@ import { applyMiddleware, createStore, combineReducers, PreloadedState } from 'r
 import { routerMiddleware } from 'connected-react-router';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { MoralisProvider } from "react-moralis";
 
 dotenv.config();
 
@@ -130,9 +129,7 @@ ReactDOM.render(
           <ApolloProvider client={client}>
             <DAppProvider config={useDappConfig}>
                 <Projects />
-                <MoralisProvider serverUrl="https://1pwccqwdxtwq.usemoralis.com:2053/server" appId="rAiqr5wWWnZwl8tVdgylIyoqLq26htRDEqpMCCMI">
                 <App />
-                </MoralisProvider>
                 <Updaters />
             </DAppProvider>
           </ApolloProvider> 

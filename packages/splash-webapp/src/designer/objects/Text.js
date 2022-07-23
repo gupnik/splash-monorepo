@@ -31,7 +31,7 @@ export default class Text extends Vector {
   }
 
   getTransformMatrix({rotate, x, y}) {
-    return `rotate(${rotate} ${x} ${y})`;
+    return `rotate(${rotate} 0 0)`; //
   }
 
   render() {

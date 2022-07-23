@@ -39,7 +39,7 @@ function App() {
         <NavBar />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/project" component={ProjectPage} />
+          <Route path="/project/:id" component={ProjectPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
