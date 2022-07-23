@@ -18,6 +18,7 @@ const reduxSafeSetProjects = (data: any): ProjectsState => {
     state.projects[project.id] = {
       id: project.id,
       uri: project.uri,
+      price: project.price,
       data: {}
     };
   });

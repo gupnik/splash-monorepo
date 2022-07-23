@@ -4,12 +4,15 @@ import ProjectCard from "../../components/ProjectCard";
 import config from "../../config";
 import { useAppSelector } from "../../hooks";
 import { Box, Button, Card, CardActions, CardContent, CircularProgress, Divider, Grid, Stack, Typography } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 interface HomePageProps {
   
 }
 
 const HomePage: React.FC<HomePageProps> = props => {
+  const history = useHistory();
+
   const splashProjectContract = new SplashProjectFactory().attach(
     config.addresses.splashProject,
   );
@@ -39,7 +42,7 @@ const HomePage: React.FC<HomePageProps> = props => {
           <CardActions>
               <Button size="small" color="primary" onClick={() => {
                       if (createProjectState.status !== "Mining") { 
-                        createProject(10)
+                        createProject(0)
                       }                          
               }}>
               {createProjectState.status === "Mining" ? "Mining..." : "Create"} 
@@ -60,7 +63,9 @@ const HomePage: React.FC<HomePageProps> = props => {
         :
         <Grid container spacing={2}>
             {Object.entries(projects).map(([projectId, project]) =>  (
-                <ProjectCard project={project} key={projectId} isHome={true} />
+                <ProjectCard project={project} key={projectId} title={"Open"} onClose={async () => {
+                  history.push(`/project/${projectId}`);
+                }} />
             ))}
         </Grid>
         }

@@ -1,14 +1,12 @@
 import { ProjectState } from '../../state/slices/project';
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material"
 import { setProjectData } from '../../state/slices/projects';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 
-const ProjectCard: React.FC<{ project: ProjectState, isHome: Boolean }> = props => {
-  const { id, uri } = props.project;
-  const history = useHistory();
+const ProjectCard: React.FC<{ project: ProjectState, title: string, onClose?: (projectData: any, price: string) => Promise<void> }> = props => {
+  const { id, uri, price } = props.project;
   const projectData: any = useAppSelector(state => state.projects.projects[id].data);
   const dispatch = useAppDispatch();
 
@@ -46,11 +44,9 @@ const ProjectCard: React.FC<{ project: ProjectState, isHome: Boolean }> = props 
           </CardContent>
           <CardActions>
             <Button size="small" color="primary" onClick={() => {
-              if (props.isHome) {
-                history.push(`/project/${id}`);
-              }
+              props.onClose && props.onClose(projectData, price);
             }}>
-            {props.isHome ? "EDIT" : "ADD"}
+            {props.title}
             </Button>
           </CardActions>
         </Card>

@@ -33,6 +33,11 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
     'updateURI',
   );
 
+  const { send: add, state: addState } = useContractFunction(
+    splashProjectContract,
+    'add',
+  );
+
   const [objects, setObjects] = useState<any>([
     // {type: "text", x: 10, y: 20, text: "Hello!", fill: "red"},
     // {type: "rect", x: 50, y: 50, width: 50, height: 50, fill: "red"}
@@ -56,32 +61,6 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
       await updateURI(id, `ipfs://${jsonHash}`); 
       history.goBack();
     });
-
-    // svgToPng(svgElement.outerHTML, async (base64PNG: string) => {
-    //   const imageFile = new Moralis.Fxile("image.png", { base64: base64PNG });
-    //   const imageResult = await imageFile.saveIPFS();
-    //   const imageIPFS = (imageResult as any).ipfs();
-    //   console.log(imageIPFS);
-    //   const imageHash = (imageResult as any).hash();
-
-    //   const metadata = {
-    //     name: "Project 1",
-    //     description: "Here we are!",
-    //     "image": `ipfs://${imageHash}`,
-    //     "attributes": []
-    //   }
-
-    //    const metadataFile = new Moralis.File("data.json", {
-    //       base64: btoa(JSON.stringify(metadata)),
-    //     }, "application/json");
-    //     const metadataResult = await metadataFile.saveIPFS();
-    //     const metadataIPFS = (metadataResult as any).ipfs();
-    //     console.log(metadataIPFS);
-    //     const metadataHash = (metadataResult as any).hash();
-
-    //     await updateURI(1, `ipfs://${metadataHash}`); //`ipfs://${hash}`
-    //     history.goBack();
-    // });
   };
 
   useEffect(() => {
@@ -146,7 +125,20 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
         <Box width={40}/>
         <Grid container spacing={2}>
             {Object.entries(projects).map(([projectId, project]) => (
-                <ProjectCard project={project} key={projectId} isHome={false} />
+                <ProjectCard project={project} key={projectId} 
+                title={addState.status === "Mining" ? "Mining..." : "Add"} 
+                onClose={async (subProjectData, price) => {
+                  if (subProjectData && subProjectData["description"] && subProjectData["description"].startsWith("[")) { 
+                    try {             
+                      await add(projectId, id, {
+                        value: price
+                      });
+                      setObjects({...objects, ...(JSON.parse(subProjectData["description"]))})    
+                    } catch (error) {
+                      
+                    }
+                  }
+                }} />
             ))}
         </Grid>
     </Stack>
