@@ -3,7 +3,7 @@ import { useContractFunction } from "@usedapp/core";
 import ProjectCard from "../../components/ProjectCard";
 import config from "../../config";
 import { useAppSelector } from "../../hooks";
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CircularProgress, Divider, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CircularProgress, Divider, Grid, Stack, Typography } from "@mui/material";
 
 interface HomePageProps {
   
@@ -25,28 +25,26 @@ const HomePage: React.FC<HomePageProps> = props => {
     <Stack padding={"10px"}>
         <Box height={40}/>
         <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea>
-                {/* <CardMedia
-                    component="img"
-                    height="140"
-                    // image="/static/images/cards/contemplative-reptile.jpg"
-                    alt="green iguana"
-                /> */}
-                <CardContent style={{ backgroundColor: "lightgray" }}>
-                    <Typography variant="body2" color="text.secondary">
-                        Click CREATE to create a new project!
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small" color="primary" onClick={() => {
-                            if (createProjectState.status !== "Mining") { 
-                              createProject(10)
-                            }                          
-                    }}>
-                    {createProjectState.status === "Mining" ? "Mining..." : "Create"} 
-                    </Button>
-                </CardActions>
-            </CardActionArea>
+          {/* <CardMedia
+              component="img"
+              height="140"
+              // image="/static/images/cards/contemplative-reptile.jpg"
+              alt="green iguana"
+          /> */}
+          <CardContent style={{ backgroundColor: "lightgray" }}>
+              <Typography variant="body2" color="text.secondary">
+                  Click CREATE to create a new project!
+              </Typography>
+          </CardContent>
+          <CardActions>
+              <Button size="small" color="primary" onClick={() => {
+                      if (createProjectState.status !== "Mining") { 
+                        createProject(10)
+                      }                          
+              }}>
+              {createProjectState.status === "Mining" ? "Mining..." : "Create"} 
+              </Button>
+          </CardActions>
         </Card>
         <Box height={40}/>
         <Typography variant="h5">

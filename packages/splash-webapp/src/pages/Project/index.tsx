@@ -6,7 +6,7 @@ import { Rect, Text, Image } from "../../designer/objects";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { svgToPng } from "./utils";
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Grid, Stack, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ProjectCard from "../../components/ProjectCard";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../utils/pinata";
@@ -105,7 +105,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
     }
 
     loadProjectData();
-  }, [projectURI])
+  }, [projectURI, dispatch, id])
  
   return (
     <>
@@ -122,28 +122,26 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
         objects={objects}/>
         <Box height={40}/>
         <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea>
-                {/* <CardMedia
-                    component="img"
-                    height="140"
-                    // image="/static/images/cards/contemplative-reptile.jpg"
-                    alt="green iguana"
-                /> */}
-                <CardContent style={{ backgroundColor: "lightgray" }}>
-                    <Typography variant="body2" color="text.secondary">
-                        Click EXIT to exit the project!
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small" color="primary" onClick={() => {
-                            if (updateURIState.status !== "Mining") { 
-                              onExit()
-                            }                          
-                    }}>
-                    {updateURIState.status === "Mining" ? "Mining..." : "Exit"} 
-                    </Button>
-                </CardActions>
-            </CardActionArea>
+          {/* <CardMedia
+              component="img"
+              height="140"
+              // image="/static/images/cards/contemplative-reptile.jpg"
+              alt="green iguana"
+          /> */}
+          <CardContent style={{ backgroundColor: "lightgray" }}>
+              <Typography variant="body2" color="text.secondary">
+                  Click EXIT to exit the project!
+              </Typography>
+          </CardContent>
+          <CardActions>
+              <Button size="small" color="primary" onClick={() => {
+                      if (updateURIState.status !== "Mining") { 
+                        onExit()
+                      }                          
+              }}>
+              {updateURIState.status === "Mining" ? "Mining..." : "Exit"} 
+              </Button>
+          </CardActions>
         </Card>
       </Stack>
         <Box width={40}/>

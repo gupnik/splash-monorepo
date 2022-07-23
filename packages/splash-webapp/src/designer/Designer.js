@@ -7,7 +7,7 @@ import {modes} from './constants';
 import * as actions from './actions';
 import {Text, Path, Rect, Circle, Image} from './objects';
 import PanelList from './panels/PanelList';
-import { Divider, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
 class Designer extends Component {
   static defaultProps = {
@@ -114,7 +114,7 @@ class Designer extends Component {
       var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
           var r = (d + Math.random()*16)%16 | 0;
           d = Math.floor(d/16);
-          return (c === 'x' ? r : (r&0x3|0x8)).toString(16);
+          return (c === 'x' ? r : ((r&0x3)|0x8)).toString(16);
       });
       return uuid;
   }
@@ -503,8 +503,9 @@ class Designer extends Component {
     } = this.props;
 
     let currentObject = objects[selectedObjectIndex],
-        isEditMode = mode === modes.EDIT_OBJECT,
-        showPropertyPanel = selectedObjectIndex !== null;
+        isEditMode = mode === modes.EDIT_OBJECT;
+
+        // showPropertyPanel = selectedObjectIndex !== null;
 
     let {width, height} = this.getCanvas();
 
