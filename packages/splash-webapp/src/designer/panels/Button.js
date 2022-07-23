@@ -7,6 +7,7 @@ const Button = ({onClick, ...props}) => {
     onClick(...args);
   }
   return (
+    // eslint-disable-next-line
     <a href="#" style={styles.button} onClick={_onClick}>
       {props.children}
     </a>

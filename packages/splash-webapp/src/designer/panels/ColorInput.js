@@ -39,6 +39,7 @@ class ColorInput extends Component {
 
     return (
       <div>
+        {/* eslint-disable-next-line */}
         <a href="#"
          style={styles.colorInput}
          onClick={this.toggleVisibility.bind(this)}>

@@ -42,7 +42,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
     const svgElement = document.getElementById('project-svg')!;
 
     svgToPng(svgElement.outerHTML, async (base64File: File) => {
-      let { pinataURL, ipfsHash } = await uploadFileToIPFS(base64File, `Project ${id}.png`);
+      let { ipfsHash } = await uploadFileToIPFS(base64File, `Project ${id}.png`);
 
       const metadata = {
         name: `Project ${id}`,
@@ -51,14 +51,14 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
         "attributes": []
       }
 
-      let { pinataURL: jsonURL, ipfsHash: jsonHash } = await uploadJSONToIPFS(metadata); 
+      let { ipfsHash: jsonHash } = await uploadJSONToIPFS(metadata); 
 
       await updateURI(1, `ipfs://${jsonHash}`); 
       history.goBack();
     });
 
     // svgToPng(svgElement.outerHTML, async (base64PNG: string) => {
-    //   const imageFile = new Moralis.File("image.png", { base64: base64PNG });
+    //   const imageFile = new Moralis.Fxile("image.png", { base64: base64PNG });
     //   const imageResult = await imageFile.saveIPFS();
     //   const imageIPFS = (imageResult as any).ipfs();
     //   console.log(imageIPFS);
@@ -85,13 +85,12 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
   };
 
   useEffect(() => {
-    projectData && projectData["description"] && setObjects(JSON.parse(projectData["description"]));
+    projectData && projectData["description"] && projectData["description"].startsWith("[") && setObjects(JSON.parse(projectData["description"]));
   }, [projectData])
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log(projectURI);
     const loadProjectData = async () => {
       try {
         const response = await fetch(projectURI.replace("ipfs://", "https://ipfs.io/ipfs/"), {
