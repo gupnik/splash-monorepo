@@ -23,7 +23,9 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
   const projects = useAppSelector(state => state.projects.projects);
   const projectURI = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].uri);
   const projectData: any = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].data);
-
+  const constituents = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].constituents);
+  console.log(constituents);
+  
   const splashProjectContract = new SplashProjectFactory().attach(
     config.addresses.splashProject,
   );
@@ -133,7 +135,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
                       await add(projectId, id, {
                         value: price
                       });
-                      setObjects({...objects, ...(JSON.parse(subProjectData["description"]))})    
+                      setObjects([...objects, ...(JSON.parse(subProjectData["description"]))])    
                     } catch (error) {
                       
                     }

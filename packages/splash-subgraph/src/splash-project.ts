@@ -3,7 +3,7 @@ import {
   ConstituentAdded,
   ProjectURIUpdated,
 } from './types/SplashProject/SplashProject';
-import { SplashProject } from './types/schema';
+import { SplashLink, SplashProject } from './types/schema';
 import { getOrCreateAccount } from './utils/helpers';
 import { BigInt } from '@graphprotocol/graph-ts';
 
@@ -42,6 +42,16 @@ export function handleConstituentAdded(event: ConstituentAdded): void {
 
   let project = SplashProject.load(projectId);
 
-  project!.constituents!.push(constituentId);
+  let constituents = project!.constituents;
+  constituents!.push(constituentId);
+  project!.constituents = constituents;
   project!.save();
+
+  let link = new SplashLink(`${projectId}:${constituentId}`);
+  link.project = projectId;
+  link.constituent = constituentId;
+  link.txIndex = event.transaction.index;
+  link.blockNumber = event.block.number;
+  link.blockTimestamp = event.block.timestamp;
+  link.save();
 }
