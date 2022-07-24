@@ -11,21 +11,6 @@ task(
 
   const contracts = await run('deploy-local');
 
-
-  await contracts.YQCAuctionHouse.instance
-    .attach(contracts.YQCAuctionHouseProxy.instance.address)
-    .unpause(Math.floor(Date.now()/1000), {
-      gasLimit: 1_000_000,
-    });
-
-  await contracts.YQCAuctionHouse.instance
-    .attach(contracts.YQCAuctionHouseProxy.instance.address)
-    .mintQueenersQueens([0, 1, 2]);
-
-  await run('create-proposal', {
-    yqcDaoProxy: contracts.YQCDAOProxy.instance.address,
-  });
-
   const { chainId } = await ethers.provider.getNetwork();
 
   const accounts = {
@@ -41,12 +26,9 @@ task(
 
   console.table(accounts);
   console.log(
-    `YQC contracts deployed to local node at http://localhost:8545 (Chain ID: ${chainId})`,
+    `Splash contracts deployed to local node at http://localhost:8545 (Chain ID: ${chainId})`,
   );
-  console.log(`Auction House Proxy address: ${contracts.YQCAuctionHouseProxy.instance.address}`);
-  console.log(`YQC ERC721 address: ${contracts.YQCToken.instance.address}`);
-  console.log(`YQC DAO Executor address: ${contracts.YQCDAOExecutor.instance.address}`);
-  console.log(`YQC DAO Proxy address: ${contracts.YQCDAOProxy.instance.address}`);
+  console.log(`Splash address: ${contracts.SplashProject.instance.address}`);
 
   await ethers.provider.send('evm_setIntervalMining', [12_000]);
 

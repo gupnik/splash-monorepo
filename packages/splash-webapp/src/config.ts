@@ -42,7 +42,7 @@ const app: Record<SupportedChains, AppConfig> = {
   [ChainId.Hardhat]: {
     jsonRpcUri: 'http://localhost:8545',
     wsRpcUri: 'ws://localhost:8545',
-    subgraphApiUri: '',
+    subgraphApiUri: 'http://127.0.0.1:8000/subgraphs/name/gupnik/Splash',
     enableHistory: false,
   },
 };

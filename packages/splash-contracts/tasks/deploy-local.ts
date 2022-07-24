@@ -24,7 +24,11 @@ task('deploy-local', 'Deploy contracts to hardhat')
 
     const contracts: Record<ContractName, Contract> = {
       SplashProject: {
-        args: [],
+        args: [
+          "Splash",
+          "SP",
+          proxyRegistryAddress
+        ],
       },
     };
 

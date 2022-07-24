@@ -11,10 +11,13 @@
   },
   "scripts": {
     "clean": "rimraf ./src/types ./build subgraph.yaml",
+    "create:local": "graph create gupnik/Splash --node http://127.0.0.1:8020",
     "codegen": "graph codegen --output-dir src/types/ && graph build",
     "deploy": "graph deploy",
     "prepare:mumbai": "mustache config/mumbai.json subgraph.yaml.mustache > subgraph.yaml",
-    "deploy:mumbai": "yarn clean && yarn prepare:mumbai && yarn codegen && yarn deploy --product hosted-service gupnik/Splash"
+    "deploy:mumbai": "yarn clean && yarn prepare:mumbai && yarn codegen && yarn deploy --product hosted-service gupnik/Splash",
+    "prepare:local": "mustache config/local.json subgraph.yaml.mustache > subgraph.yaml",
+    "deploy:local": "graph deploy gupnik/Splash --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.24.1",

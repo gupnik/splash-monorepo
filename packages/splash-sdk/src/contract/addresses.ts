@@ -4,6 +4,9 @@ const chainIdToAddresses: { [chainId: number]: ContractAddresses } = {
   [ChainId.Mumbai]: {
     splashProject: '0xa14EBbd4b00f60942eCE0254e1A400CD567D5B50',
   },
+  [ChainId.Local]: {
+    splashProject: '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+  }
 };
 
 /**
