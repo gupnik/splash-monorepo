@@ -7,7 +7,17 @@ type SplashProject @entity {
 
   uri: String!
 
-  constituents: [SplashProject!]
+  image: String!
+
+  name: String!
+
+  description: String!
+
+  updatedAtTimestamp: BigInt!
+
+  tags: [String!]!
+
+  constituents: [SplashLink!]! @derivedFrom(field: "project")
 }
 
 type SplashLink @entity {
@@ -29,5 +39,15 @@ type SplashLink @entity {
 type SplashAccount @entity {
   id: ID!
 
-  projects: [SplashProject!]
+  projects: [SplashProject!]! @derivedFrom(field: "creator")
 }
+
+type _Schema_
+  @fulltext(
+    name: "search"
+    language: en
+    algorithm: rank
+    include: [{entity: "SplashProject", fields:
+      [{ name: "name" }
+    ] }]
+  )

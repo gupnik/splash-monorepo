@@ -4,7 +4,9 @@ export interface ProjectState {
   id: string;
   uri: string;
   price: string;
-  data: any;
+  name: string;
+  description: string;
+  image: string;
   constituents: ProjectState[];
 }
 
@@ -12,7 +14,9 @@ const initialState: ProjectState = {
   id: '0',
   uri: "https://ipfs.io/ipfs/QmVFKiZ48nq9F343UY4Ykiirnfqd4MYm8Qydz1ifGbbR6C",
   price: '0',
-  data: {},
+  name: '',
+  description: '',
+  image: 'https://ipfs.io/ipfs/QmZWexPEudXMLm3Fn51YrDmoEGMe32AT4GwE3UHiP1VgHi', 
   constituents: [],
 }
 

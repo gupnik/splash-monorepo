@@ -5,7 +5,7 @@ import {
 } from './types/SplashProject/SplashProject';
 import { SplashLink, SplashProject } from './types/schema';
 import { getOrCreateAccount } from './utils/helpers';
-import { BigInt } from '@graphprotocol/graph-ts';
+import { ipfs, json, JSONValue } from '@graphprotocol/graph-ts';
 
 export function handleProjectCreated(event: ProjectCreated): void {
   let projectId = event.params.projectId.toString();
@@ -17,12 +17,28 @@ export function handleProjectCreated(event: ProjectCreated): void {
   project.creator = creatorAddress;
   project.price = event.params.price;
   project.uri = event.params.uri;
-  project.constituents = [];
+
+  let metadata = ipfs.cat(project.uri.replace("ipfs://", ""));
+  if (metadata) {
+    const value = json.fromBytes(metadata).toObject();
+    if (value) {
+      const image = value.get('image');
+      const name = value.get('name');
+      const description = value.get('description')
+      // const tags = value.get('tags')
+
+      if (name && image && description) {
+        project.name = name.toString();
+        project.image = image.toString();
+        project.description = description.toString()
+        project.tags = []; //tags != null ? tags.toArray().map<string>((x: JSONValue) => x.toString()) : []
+      }
+    }
+  }
+
+  project.updatedAtTimestamp = event.block.timestamp;
   project.save();
 
-  let projects = account.projects;
-  projects!.push(projectId);
-  account.projects = projects;
   account.save();
 }
 
@@ -32,6 +48,27 @@ export function handleProjectURIUpdated(event: ProjectURIUpdated): void {
   let project = SplashProject.load(projectId);
 
   project!.uri = event.params.uri;
+
+  let metadata = ipfs.cat(project!.uri.replace("ipfs://", ""));
+  if (metadata) {
+    const value = json.fromBytes(metadata).toObject();
+    if (value) {
+      const image = value.get('image');
+      const name = value.get('name');
+      const description = value.get('description')
+      // const tags = value.get('tags')
+
+      if (name && image && description) {
+        project!.name = name.toString();
+        project!.image = image.toString();
+        project!.description = description.toString()
+        project!.tags = []; //tags != null ? tags.toArray().map<string>((x: JSONValue) => x.toString()) : []
+      }
+    }
+  }
+
+  project!.updatedAtTimestamp = event.block.timestamp
+
   project!.save();
 }
 
@@ -39,13 +76,6 @@ export function handleProjectURIUpdated(event: ProjectURIUpdated): void {
 export function handleConstituentAdded(event: ConstituentAdded): void {
   let projectId = event.params.projectId.toString();
   let constituentId = event.params.constituentId.toString();
-
-  let project = SplashProject.load(projectId);
-
-  let constituents = project!.constituents;
-  constituents!.push(constituentId);
-  project!.constituents = constituents;
-  project!.save();
 
   let link = new SplashLink(`${projectId}:${constituentId}`);
   link.project = projectId;

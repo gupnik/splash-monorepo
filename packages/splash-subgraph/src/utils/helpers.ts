@@ -10,7 +10,6 @@ export function getOrCreateAccount(
 
   if (holder == null && createIfNotFound) {
     holder = new SplashAccount(id);
-    holder.projects = []
 
     if (save) {
       holder.save();

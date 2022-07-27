@@ -14,10 +14,18 @@ export const projectsQuery = (account?: string) => gql`
       id
       uri
       price
+      name
+      image
+      description
       constituents {
-        id
-        uri
-        price
+        constituent {
+          id
+          uri
+          price
+          name
+          image 
+          description
+        }
       }
     }
   }

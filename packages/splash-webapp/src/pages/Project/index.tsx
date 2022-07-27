@@ -7,10 +7,9 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { svgToPng } from "./utils";
 import { Box, Button, Card, CardActions, CardContent, Grid, Stack, Typography } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../hooks";
 import ProjectCard from "../../components/ProjectCard";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../utils/pinata";
-import { setProjectData } from "../../state/slices/projects";
 
 interface ProjectPageProps {
   
@@ -21,10 +20,8 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
   const history = useHistory();
 
   const projects = useAppSelector(state => state.projects.projects);
-  const projectURI = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].uri);
-  const projectData: any = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].data);
+  const projectDescription = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].description);
   const constituents = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].constituents);
-  console.log(constituents);
   
   const splashProjectContract = new SplashProjectFactory().attach(
     config.addresses.splashProject,
@@ -66,26 +63,17 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
   };
 
   useEffect(() => {
-    projectData && projectData["description"] && projectData["description"].startsWith("[") && setObjects(JSON.parse(projectData["description"]));
-  }, [projectData])
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const loadProjectData = async () => {
-      try {
-        const response = await fetch(projectURI.replace("ipfs://", "https://ipfs.io/ipfs/"), {
-          // mode: 'no-cors'
-        });
-        const data = await response.json();
-        dispatch(setProjectData({ id, data }));
-      } catch (error) {
-        
-      }
+    let objects: any[] = []
+    if (projectDescription && projectDescription.startsWith("[")) {
+      objects = JSON.parse(projectDescription);
     }
-
-    loadProjectData();
-  }, [projectURI, dispatch, id])
+    constituents && constituents.forEach(x => {
+      if (x.description && x.description.startsWith("[")) {
+        objects = ([...objects, ...(JSON.parse(x.description))])
+      }
+    })
+    setObjects(objects)
+  }, [projectDescription, constituents])
  
   return (
     <>
@@ -129,13 +117,13 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
             {Object.entries(projects).map(([projectId, project]) => (
                 <ProjectCard project={project} key={projectId} 
                 title={addState.status === "Mining" ? "Mining..." : "Add"} 
-                onClose={async (subProjectData, price) => {
-                  if (subProjectData && subProjectData["description"] && subProjectData["description"].startsWith("[")) { 
+                onClose={async (description, price) => {
+                  if (description && description.startsWith("[")) { 
                     try {             
                       await add(projectId, id, {
                         value: price
                       });
-                      setObjects([...objects, ...(JSON.parse(subProjectData["description"]))])    
+                      setObjects([...objects, ...(JSON.parse(description))])    
                     } catch (error) {
                       
                     }

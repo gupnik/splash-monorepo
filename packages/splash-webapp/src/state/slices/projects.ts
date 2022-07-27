@@ -19,13 +19,16 @@ const reduxSafeSetProjects = (data: any): ProjectsState => {
       id: project.id,
       uri: project.uri,
       price: project.price,
-      data: {},
+      name: project.name,
+      description: project.description,
+      image: project.image,
       constituents: project.constituents.map((x: any) => {
         return {
-        id: x.id,
-        uri: x.uri,
-        price: x.price,
-        data: {},
+        id: x.constituent.id,
+        price: x.constituent.price,
+        name: x.constituent.name,
+        description: x.constituent.description,
+        image: x.constituent.image,
       }})
     };
   });
@@ -38,13 +41,10 @@ const projectsSlice = createSlice({
   reducers: {
     setProjects: (state, action: PayloadAction<any>) => {
       state.projects = reduxSafeSetProjects(action.payload).projects;
-    },
-    setProjectData: (state, action: PayloadAction<{ id: string, data: any }>) => {
-      state.projects[action.payload.id].data = action.payload.data;
     }
   }
 });
 
-export const { setProjects, setProjectData } = projectsSlice.actions;
+export const { setProjects } = projectsSlice.actions;
 
 export default projectsSlice.reducer;
