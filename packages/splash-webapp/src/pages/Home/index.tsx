@@ -13,6 +13,8 @@ const HomePage: React.FC<HomePageProps> = props => {
 
   return (
     <Stack padding={"10px"}>
+        {/* <Box height={20}/>
+        <TextField variant="outlined" label="Search"/> */}
         <Box height={40}/>
         <Card sx={{ maxWidth: 345 }}>
           {/* <CardMedia

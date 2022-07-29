@@ -9,7 +9,9 @@ import { svgToPng } from "./utils";
 import { Box, Button, Card, CardActions, CardContent, Grid, Stack, Typography } from "@mui/material";
 import { useAppSelector } from "../../hooks";
 import ProjectCard from "../../components/ProjectCard";
-import { uploadFileToIPFS, uploadJSONToIPFS } from "../../utils/pinata";
+// import { uploadFileToIPFS, uploadJSONToIPFS } from "../../utils/pinata";
+import { NFTStorage, File } from 'nft.storage/dist/bundle.esm.min.js';
+// import mime from 'mime';
 
 interface ProjectPageProps {
   
@@ -50,19 +52,29 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
   const onExit = async () => {
     const svgElement = document.getElementById('project-svg')!;
 
-    svgToPng(svgElement.outerHTML, async (base64File: File) => {
-      let { ipfsHash } = await uploadFileToIPFS(base64File, `Project ${id}.png`);
+    svgToPng(`Project ${id}.png`, svgElement.outerHTML, async (base64File: File) => {
+      // let { ipfsHash } = await uploadFileToIPFS(base64File, `Project ${id}.png`);
 
-      const metadata = {
-        name: `Project ${id}`,
-        description: JSON.stringify(objects),
-        "image": `ipfs://${ipfsHash}`, //pinataURL,
-        "attributes": []
-      }
+      // const metadata = {
+      //   name: `Project ${id}`,
+      //   description: JSON.stringify(objects),
+      //   "image": `ipfs://${ipfsHash}`, //pinataURL,
+      //   "attributes": []
+      // }
 
-      let { ipfsHash: jsonHash } = await uploadJSONToIPFS(metadata); 
+      // let { ipfsHash: jsonHash } = await uploadJSONToIPFS(metadata); 
 
-      await updateURI(id, `ipfs://${jsonHash}`); 
+      const nftstorage = new NFTStorage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDA3MmUyMzY0MkQxMjkxZjllZDU2NzRGNGU0QzQyMzI1YURmZTRCYjAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1OTA3NDQyOTI0OSwibmFtZSI6IlNwbGFzaCJ9.YpUTurdwRoPvXHhZyeY9EVQcmQ5fXeTSkoIOjdP0T10' });
+
+      const { url: jsonHash} = await nftstorage.store({
+          image: base64File,
+          name: `Project ${id}`,
+          description: JSON.stringify(objects),
+          properties: { "attributes": [] },
+      })
+      console.log(jsonHash);
+
+      await updateURI(id, jsonHash); 
       history.goBack();
     });
   };

@@ -1,9 +1,9 @@
-export function svgToPng(svg, callback) {
+export function svgToPng(name, svg, callback) {
   svg = `<?xml version="1.0" standalone="no"?>
   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
   ${svg}`;
   const url = getSvgUrl(svg);
-  svgUrlToPng(url, (imgData) => {
+  svgUrlToPng(name, url, (imgData) => {
     callback(imgData);
     URL.revokeObjectURL(url);
   });
@@ -13,7 +13,7 @@ function getSvgUrl(svg) {
     type: 'image/svg+xml'
   }));
 }
-function svgUrlToPng(svgUrl, callback) {
+function svgUrlToPng(name, svgUrl, callback) {
   const svgImage = document.createElement('img');
   document.body.appendChild(svgImage);
   svgImage.onload = () => {
@@ -33,7 +33,7 @@ function svgUrlToPng(svgUrl, callback) {
     // const imgData = canvas.toDataURL('image/png');
     
     document.body.removeChild(svgImage);
-    dataUrlToFile(png, "Test.png").then(file => callback(file));
+    dataUrlToFile(png, name).then(file => callback(file));
   };
   svgImage.onerror = (e) => {
     console.log(e);

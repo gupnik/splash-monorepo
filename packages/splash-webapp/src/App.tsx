@@ -13,6 +13,7 @@ import NavBar from './components/NavBar';
 import ProjectPage from './pages/Project';
 import AlertModal from './components/Modal';
 import NetworkAlert from './components/NetworkAlert';
+import ProfilePage from './pages/Profile';
 
 function App() {
   const { account, chainId } = useEthers();
@@ -40,6 +41,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/project/:id" component={ProjectPage} />
+          <Route path="/profile/:id" component={ProfilePage} />
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
