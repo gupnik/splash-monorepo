@@ -1,9 +1,6 @@
-import { SplashProjectFactory } from "@splash/sdk";
-import { useContractFunction } from "@usedapp/core";
 import ProjectCard from "../../components/ProjectCard";
-import config from "../../config";
 import { useAppSelector } from "../../hooks";
-import { Box, Button, Card, CardActions, CardContent, CircularProgress, Divider, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CircularProgress, Divider, Grid, Stack, TextField, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
 interface HomePageProps {
@@ -12,17 +9,7 @@ interface HomePageProps {
 
 const HomePage: React.FC<HomePageProps> = props => {
   const history = useHistory();
-
-  const splashProjectContract = new SplashProjectFactory().attach(
-    config.addresses.splashProject,
-  );
-
   const projects = useAppSelector(state => state.projects.projects);
-
-  const { send: createProject, state: createProjectState } = useContractFunction(
-    splashProjectContract,
-    'create',
-  );
 
   return (
     <Stack padding={"10px"}>
@@ -41,11 +28,10 @@ const HomePage: React.FC<HomePageProps> = props => {
           </CardContent>
           <CardActions>
               <Button size="small" color="primary" onClick={() => {
-                      if (createProjectState.status !== "Mining") { 
-                        createProject(0)
-                      }                          
+                history.push(`/project/new`);
+                     
               }}>
-              {createProjectState.status === "Mining" ? "Mining..." : "Create"} 
+              {"Create"} 
               </Button>
           </CardActions>
         </Card>

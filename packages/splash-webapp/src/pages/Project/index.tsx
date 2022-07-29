@@ -27,6 +27,11 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
     config.addresses.splashProject,
   );
 
+  const { send: createProject, state: createProjectState } = useContractFunction(
+    splashProjectContract,
+    'create',
+  );
+
   const { send: updateURI, state: updateURIState } = useContractFunction(
     splashProjectContract,
     'updateURI',
@@ -98,16 +103,18 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
           /> */}
           <CardContent style={{ backgroundColor: "lightgray" }}>
               <Typography variant="body2" color="text.secondary">
-                  Click EXIT to exit the project!
+                  Click {(id === "new" ? "CREATE" : "SAVE")} to exit the project!
               </Typography>
           </CardContent>
           <CardActions>
               <Button size="small" color="primary" onClick={() => {
-                      if (updateURIState.status !== "Mining") { 
-                        onExit()
-                      }                          
+                if (id === "new" && createProjectState.status !== "Mining") { 
+                    createProject(0)
+                } else if (updateURIState.status !== "Mining") { 
+                  onExit()
+                }                          
               }}>
-              {updateURIState.status === "Mining" ? "Mining..." : "Exit"} 
+              {updateURIState.status === "Mining" ? "Mining..." : (id === "new" ? "Create" : "Save")} 
               </Button>
           </CardActions>
         </Card>
