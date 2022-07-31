@@ -81,15 +81,15 @@ const NavBar = () => {
             >
               OPENSEA
             </Nav.Link>
-            {/*<Nav.Link
-              href={"/"}
+            <Nav.Link
+              href={"https://thegraph.com/hosted-service/subgraph/gupnik/splash"}
               className={classes.nounsNavLink}
               target="_blank"
               rel="noreferrer"
             >
-              DISCOURSE
+              SUBGRAPH
             </Nav.Link>
-            <Nav.Link as={Link} to="/playground" className={classes.nounsNavLink}>
+            {/*<Nav.Link as={Link} to="/playground" className={classes.nounsNavLink}>
               PLAYGROUND
             </Nav.Link> */}
             {activeAccount ? connectedContent : disconnectedContent}
