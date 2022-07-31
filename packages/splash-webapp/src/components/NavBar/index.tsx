@@ -73,15 +73,15 @@ const NavBar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" className={classes.navToggle} />
           <Navbar.Collapse className="justify-content-end">
-            {/* <Nav.Link
-              href={"/"}
+            <Nav.Link
+              href={"https://testnets.opensea.io/collection/splash-projects-poc"}
               className={classes.nounsNavLink}
               target="_blank"
               rel="noreferrer"
             >
-              DOCS
+              OPENSEA
             </Nav.Link>
-            <Nav.Link
+            {/*<Nav.Link
               href={"/"}
               className={classes.nounsNavLink}
               target="_blank"
