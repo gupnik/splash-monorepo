@@ -6,7 +6,7 @@ import { Rect, Text, Image } from "../../designer/objects";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { svgToPng } from "./utils";
-import { Box, Button, Card, CardActions, CardContent, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Grid, Stack, TextField, Typography } from "@mui/material";
 import { useAppSelector } from "../../hooks";
 import ProjectCard from "../../components/ProjectCard";
 // import { uploadFileToIPFS, uploadJSONToIPFS } from "../../utils/pinata";
@@ -19,9 +19,11 @@ interface ProjectPageProps {
 
 const ProjectPage: React.FC<ProjectPageProps> = props => {
   const { id } = useParams<{ id: string }>();
+  const [name, setName] = useState<string>(`Project ${id}`);
   const history = useHistory();
 
   const projects = useAppSelector(state => state.projects.projects);
+  const projectName = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].name);
   const projectDescription = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].description);
   const constituents = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].constituents);
   
@@ -68,7 +70,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
 
       const { url: jsonHash} = await nftstorage.store({
           image: base64File,
-          name: `Project ${id}`,
+          name,
           description: JSON.stringify(objects),
           properties: { "attributes": [] },
       })
@@ -91,6 +93,10 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
     })
     setObjects(objects)
   }, [projectDescription, constituents])
+
+  useEffect(() => {
+    setName(projectName);
+  }, [projectName])
  
   return (
     <>
@@ -106,8 +112,12 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
         onUpdate={(objects: any) => {setObjects(objects)}}
         objects={objects}/>
         <Box height={40}/>
+        <TextField label="Name" value={name} onChange={(e) => {
+          setName(e.target.value);
+        }}/>
+        <Box height={40}/>
         <Card sx={{ maxWidth: 345 }}>
-          {/* <CardMedia
+          {/* <CardMedias
               component="img"
               height="140"
               // image="/static/images/cards/contemplative-reptile.jpg"
@@ -151,7 +161,6 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
             ))}
         </Grid>
     </Stack>
-    {/* <Button onClick={() => onExit()}>{updateURIState.status === "Mining" ? "Mining..." : "Exit"}</Button> */}
     </>
   )
 }

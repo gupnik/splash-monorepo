@@ -2,6 +2,7 @@ export function svgToPng(name, svg, callback) {
   svg = `<?xml version="1.0" standalone="no"?>
   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
   ${svg}`;
+
   const url = getSvgUrl(svg);
   svgUrlToPng(name, url, (imgData) => {
     callback(imgData);
