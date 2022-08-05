@@ -2,7 +2,7 @@ import { ChainId, ContractAddresses } from './types';
 
 const chainIdToAddresses: { [chainId: number]: ContractAddresses } = {
   [ChainId.Mumbai]: {
-    splashProject: '0xa14EBbd4b00f60942eCE0254e1A400CD567D5B50',
+    splashProject: '0x1Ce2A7d9640f96A201F12C92Edb19410173f8192',
   },
   [ChainId.Local]: {
     splashProject: '0x5FbDB2315678afecb367f032d93F642f64180aa3'

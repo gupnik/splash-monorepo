@@ -81,6 +81,25 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
     });
   };
 
+  const onCreate = async () => {
+    const svgElement = document.getElementById('project-svg')!;
+
+    svgToPng(`${name}.png`, svgElement.outerHTML, async (base64File: File) => {
+      const nftstorage = new NFTStorage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDA3MmUyMzY0MkQxMjkxZjllZDU2NzRGNGU0QzQyMzI1YURmZTRCYjAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1OTA3NDQyOTI0OSwibmFtZSI6IlNwbGFzaCJ9.YpUTurdwRoPvXHhZyeY9EVQcmQ5fXeTSkoIOjdP0T10' });
+
+      const { url: jsonHash} = await nftstorage.store({
+          image: base64File,
+          name,
+          description: JSON.stringify(objects),
+          properties: { "attributes": [] },
+      })
+      console.log(jsonHash);
+
+      await createProject(0, jsonHash); 
+      history.goBack();
+    });
+  };
+
   useEffect(() => {
     let objects: any[] = []
     if (projectDescription && projectDescription.startsWith("[")) {
@@ -131,7 +150,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
           <CardActions>
               <Button size="small" color="primary" onClick={() => {
                 if (id === "new" && createProjectState.status !== "Mining") { 
-                    createProject(0)
+                  onCreate()
                 } else if (updateURIState.status !== "Mining") { 
                   onExit()
                 }                          

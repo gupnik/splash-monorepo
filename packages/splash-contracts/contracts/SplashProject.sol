@@ -37,6 +37,7 @@ contract SplashProject is
     }
 
     event ProjectCreated(uint256 indexed projectId, address creator, uint256 price, string uri);
+    event ProjectPriceUpdated(uint256 indexed projectId, uint256 price);
     event ProjectURIUpdated(uint256 indexed projectId, string uri);
     event ConstituentAdded(uint256 indexed projectId, uint256 indexed constituentId);
 
@@ -57,16 +58,33 @@ contract SplashProject is
         return projects[tokenId].uri;
     }
 
-    function create(uint256 price) public {
+    function buy(uint256 projectId) public payable {
+        SplashProjectInfo storage projectInfo = projects[projectId];
+        require(
+            projectInfo.price <= msg.value,
+            "Value sent is not correct"
+        );
+        _mint(msg.sender, projectId, 1, "");
+        projectInfo.currentSupply = projectInfo.currentSupply.add(1);
+    }
+
+    function create(uint256 price, string memory projectURI) public {
         SplashProjectInfo memory projectInfo;
         projectInfo.id = numProjects.add(1);
         projectInfo.creator = msg.sender;
         projectInfo.price = price;
-        projectInfo.uri = placeholderURI;
+        projectInfo.uri = projectURI;
         projects[projectInfo.id] = projectInfo;
         numProjects = numProjects.add(1);
         _mint(msg.sender, projectInfo.id, 1, "");
-        emit ProjectCreated(projectInfo.id, msg.sender, price, placeholderURI);
+        emit ProjectCreated(projectInfo.id, msg.sender, price, projectURI);
+    }
+
+    function updatePrice(uint256 projectId, uint256 price) public {
+        SplashProjectInfo storage projectInfo = projects[projectId];
+        require(projectInfo.creator == msg.sender, "You cannot edit this project");
+        projects[projectId].price = price;
+        emit ProjectPriceUpdated(projectId, price);
     }
 
     function updateURI(uint256 projectId, string memory projectURI) public {

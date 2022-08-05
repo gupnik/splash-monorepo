@@ -2,6 +2,7 @@ import {
   ProjectCreated,
   ConstituentAdded,
   ProjectURIUpdated,
+  ProjectPriceUpdated,
 } from './types/SplashProject/SplashProject';
 import { SplashLink, SplashProject } from './types/schema';
 import { getOrCreateAccount } from './utils/helpers';
@@ -40,6 +41,17 @@ export function handleProjectCreated(event: ProjectCreated): void {
   project.save();
 
   account.save();
+}
+
+export function handleProjectPriceUpdated(event: ProjectPriceUpdated): void {
+  let projectId = event.params.projectId.toString();
+
+  let project = SplashProject.load(projectId);
+
+  project!.price = event.params.price;
+  project!.updatedAtTimestamp = event.block.timestamp
+
+  project!.save();
 }
 
 export function handleProjectURIUpdated(event: ProjectURIUpdated): void {
