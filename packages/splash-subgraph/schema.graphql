@@ -15,7 +15,9 @@ type SplashProject @entity {
 
   updatedAtTimestamp: BigInt!
 
-  tags: [String!]!
+  supply: BigInt!
+
+  tags: String!
 
   consumers: [SplashLink!]! @derivedFrom(field: "constituent")
 
@@ -50,6 +52,9 @@ type _Schema_
     language: en
     algorithm: rank
     include: [{entity: "SplashProject", fields:
-      [{ name: "name" }
-    ] }]
+      [
+        { name: "name" },
+        { name: "tags" },
+      ] 
+    }]
   )

@@ -3,10 +3,12 @@ import {
   ConstituentAdded,
   ProjectURIUpdated,
   ProjectPriceUpdated,
+  TransferSingle,
 } from './types/SplashProject/SplashProject';
 import { SplashLink, SplashProject } from './types/schema';
 import { getOrCreateAccount } from './utils/helpers';
-import { ipfs, json, JSONValue } from '@graphprotocol/graph-ts';
+import { Address, ipfs, json, JSONValue, log } from '@graphprotocol/graph-ts';
+import { BIGINT_ONE, BIGINT_ZERO } from './utils/constants';
 
 export function handleProjectCreated(event: ProjectCreated): void {
   let projectId = event.params.projectId.toString();
@@ -26,17 +28,22 @@ export function handleProjectCreated(event: ProjectCreated): void {
       const image = value.get('image');
       const name = value.get('name');
       const description = value.get('description')
-      // const tags = value.get('tags')
+      const tags = value.get('tags')
 
       if (name && image && description) {
         project.name = name.toString();
         project.image = image.toString();
         project.description = description.toString()
-        project.tags = []; //tags != null ? tags.toArray().map<string>((x: JSONValue) => x.toString()) : []
+        if (tags) {
+          project.tags = tags.toString();
+        } else {
+          project.tags = "";
+        }
       }
     }
   }
 
+  project.supply = BIGINT_ZERO;
   project.updatedAtTimestamp = event.block.timestamp;
   project.save();
 
@@ -68,13 +75,17 @@ export function handleProjectURIUpdated(event: ProjectURIUpdated): void {
       const image = value.get('image');
       const name = value.get('name');
       const description = value.get('description')
-      // const tags = value.get('tags')
+      const tags = value.get('tags')
 
       if (name && image && description) {
         project!.name = name.toString();
         project!.image = image.toString();
         project!.description = description.toString()
-        project!.tags = []; //tags != null ? tags.toArray().map<string>((x: JSONValue) => x.toString()) : []
+        if (tags) {
+          project!.tags = tags.toString();
+        } else {
+          project!.tags = "";
+        }
       }
     }
   }
@@ -96,4 +107,14 @@ export function handleConstituentAdded(event: ConstituentAdded): void {
   link.blockNumber = event.block.number;
   link.blockTimestamp = event.block.timestamp;
   link.save();
+}
+
+export function handleTransferSingle(event: TransferSingle): void {
+  let projectId = event.params.id.toString();
+  let from = event.params.from.toHex();
+  if (from.localeCompare(Address.empty().toHexString())) {
+    let project = SplashProject.load(projectId);
+    project!.supply = project!.supply.plus(BIGINT_ONE);
+    project!.save();
+  }
 }

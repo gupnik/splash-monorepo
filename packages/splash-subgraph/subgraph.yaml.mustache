@@ -32,3 +32,5 @@ dataSources:
           handler: handleProjectURIUpdated
         - event: ConstituentAdded(indexed uint256,indexed uint256)
           handler: handleConstituentAdded
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
