@@ -27,7 +27,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
   const projectName = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].name);
   const projectDescription = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].description);
   const projectTags = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].tags);
-  const constituents = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].constituents || []);
+  const constituents = useAppSelector(state => (state.projects.projects[id] && state.projects.projects[id].constituents) || []);
 
   const splashProjectContract = new SplashProjectFactory().attach(
     config.addresses.splashProject,
