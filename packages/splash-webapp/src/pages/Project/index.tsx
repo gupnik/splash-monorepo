@@ -27,7 +27,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
   const projectName = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].name);
   const projectDescription = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].description);
   const projectTags = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].tags);
-  const constituents = useAppSelector(state => (state.projects.projects[id] && state.projects.projects[id].constituents) || []);
+  const constituents = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].constituents);
 
   const splashProjectContract = new SplashProjectFactory().attach(
     config.addresses.splashProject,
@@ -105,16 +105,16 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
   };
 
   useEffect(() => {
-    let objects: any[] = []
+    let newObjects: any[] = []
     if (projectDescription && projectDescription.startsWith("[")) {
-      objects = JSON.parse(projectDescription);
+      newObjects = JSON.parse(projectDescription);
     }
     constituents && constituents.forEach(x => {
       if (x.description && x.description.startsWith("[")) {
-        objects = ([...objects, ...(JSON.parse(x.description))])
+        newObjects = ([...newObjects, ...(JSON.parse(x.description))])
       }
     })
-    setObjects(objects)
+    setObjects(newObjects)
   }, [projectDescription, constituents])
 
   useEffect(() => {
@@ -148,12 +148,6 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
         }}/>
         <Box height={40}/>
         <Card sx={{ maxWidth: 345 }}>
-          {/* <CardMedias
-              component="img"
-              height="140"
-              // image="/static/images/cards/contemplative-reptile.jpg"
-              alt="green iguana"
-          /> */}
           <CardContent style={{ backgroundColor: "lightgray" }}>
               <Typography variant="body2" color="text.secondary">
                   Click {(id === "new" ? "CREATE" : "SAVE")} to exit the project!
@@ -175,7 +169,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
         </Card>
         <Box height={40}/>
         <List sx={{ width: '100%', maxWidth: 360 }}>
-          {constituents.map((c, index) => (
+          {(constituents || []).map((c, index) => (
             <ListItem alignItems="flex-start">
             <ListItemAvatar>
               <Avatar alt={c.name} src={c.image.replace("ipfs://", "https://ipfs.io/ipfs/")} />
