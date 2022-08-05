@@ -29,6 +29,7 @@ const ProfilePage: React.FC<ProfilePageProps> = props => {
         description: project.description,
         image: project.image,
         supply: project.supply,
+        tags: project.tags,
         consumers: project.consumers.map((x: any) => {
           return {
           id: x.project.id,
@@ -37,6 +38,7 @@ const ProfilePage: React.FC<ProfilePageProps> = props => {
           description: x.project.description,
           image: x.project.image,
           supply: x.project.supply,
+          tags: x.project.tags,
         }}),
         constituents: project.constituents.map((x: any) => {
           return {
@@ -46,6 +48,7 @@ const ProfilePage: React.FC<ProfilePageProps> = props => {
             description: x.constituent.description,
             image: x.constituent.image,
             supply: x.constituent.supply,
+            tags: x.constituent.tags,
           }
         })
       }

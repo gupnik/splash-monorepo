@@ -6,7 +6,7 @@ import { Rect, Text, Image } from "../../designer/objects";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { svgToPng } from "./utils";
-import { Box, Button, Card, CardActions, CardContent, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Grid, List, ListItem, ListItemAvatar, ListItemText, Stack, TextField, Typography, Avatar, Divider } from "@mui/material";
 import { useAppSelector } from "../../hooks";
 import ProjectCard from "../../components/ProjectCard";
 // import { uploadFileToIPFS, uploadJSONToIPFS } from "../../utils/pinata";
@@ -20,13 +20,15 @@ interface ProjectPageProps {
 const ProjectPage: React.FC<ProjectPageProps> = props => {
   const { id } = useParams<{ id: string }>();
   const [name, setName] = useState<string>(`Project ${id}`);
+  const [tags, setTags] = useState<string>("");
   const history = useHistory();
 
   const projects = useAppSelector(state => state.projects.projects);
   const projectName = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].name);
   const projectDescription = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].description);
-  const constituents = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].constituents);
-  
+  const projectTags = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].tags);
+  const constituents = useAppSelector(state => state.projects.projects[id] && state.projects.projects[id].constituents || []);
+
   const splashProjectContract = new SplashProjectFactory().attach(
     config.addresses.splashProject,
   );
@@ -72,6 +74,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
           image: base64File,
           name,
           description: JSON.stringify(objects),
+          tags,
           properties: { "attributes": [] },
       })
       console.log(jsonHash);
@@ -91,6 +94,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
           image: base64File,
           name,
           description: JSON.stringify(objects),
+          tags,
           properties: { "attributes": [] },
       })
       console.log(jsonHash);
@@ -116,7 +120,11 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
   useEffect(() => {
     setName(projectName);
   }, [projectName])
- 
+
+  useEffect(() => {
+    setTags(projectTags);
+  }, [projectTags])
+
   return (
     <>
     <Stack direction="row" >
@@ -133,6 +141,10 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
         <Box height={40}/>
         <TextField label="Name" value={name} onChange={(e) => {
           setName(e.target.value);
+        }}/>
+        <Box height={20}/>
+        <TextField label="Tags" value={tags} onChange={(e) => {
+          setTags(e.target.value);
         }}/>
         <Box height={40}/>
         <Card sx={{ maxWidth: 345 }}>
@@ -161,6 +173,32 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
               </Button>
           </CardActions>
         </Card>
+        <Box height={40}/>
+        <List sx={{ width: '100%', maxWidth: 360 }}>
+          {constituents.map((c, index) => (
+            <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt={c.name} src={c.image.replace("ipfs://", "https://ipfs.io/ipfs/")} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={c.name}
+              secondary={
+                <>
+                  <Typography
+                    sx={{ display: 'inline' }}
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                  >
+                    {c.tags}
+                  </Typography>
+                </>
+              }
+            />
+            <Divider variant="inset" component="li" />
+            </ListItem>
+          ))}
+        </List>
       </Stack>
         <Box width={40}/>
         <Grid container spacing={2}>
@@ -168,6 +206,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
                 <ProjectCard project={project} key={projectId} 
                 title={addState.status === "Mining" ? "Mining..." : "Add"} 
                 showBuy={false}
+                showRemixCount={true}
                 onClose={async (description, price) => {
                   if (description && description.startsWith("[")) { 
                     try {             

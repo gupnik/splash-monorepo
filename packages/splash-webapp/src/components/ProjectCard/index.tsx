@@ -4,8 +4,8 @@ import { useContractFunction } from '@usedapp/core';
 import { SplashProjectFactory } from '@splash/sdk';
 import config from "../../config";
 
-const ProjectCard: React.FC<{ project: ProjectState, title: string, showBuy: boolean, showRemixCount?: boolean, onClose?: (description: string, price: string) => Promise<void> }> = props => {
-  const { id, price, name, description, image, consumers, supply } = props.project;
+const ProjectCard: React.FC<{ project: ProjectState, title: string, showBuy: boolean, showConstituentCount?: boolean, showRemixCount?: boolean, onClose?: (description: string, price: string) => Promise<void> }> = props => {
+  const { id, price, name, description, image, consumers, supply, constituents } = props.project;
 
   const splashProjectContract = new SplashProjectFactory().attach(
     config.addresses.splashProject,
@@ -39,7 +39,7 @@ const ProjectCard: React.FC<{ project: ProjectState, title: string, showBuy: boo
             <Button size="small" color="primary" onClick={() => {
               props.onClose && props.onClose(description, price);
             }}>
-            {props.title}{props.showRemixCount &&`(${consumers.length})`}
+            {props.title}{props.showRemixCount &&`(${consumers.length})`}{props.showConstituentCount &&`(${constituents.length})`}
             </Button>
             {props.showBuy ? 
             (<Button size="small" color="primary" onClick={() => {

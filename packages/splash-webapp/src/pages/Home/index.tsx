@@ -64,7 +64,10 @@ const HomePage: React.FC<HomePageProps> = props => {
             </div>) :
             (<Grid container spacing={2}>
                 {Object.entries(projects).map(([projectId, project]) =>  (
-                    <ProjectCard project={project} key={projectId} title={"Open"} showBuy={false} onClose={async () => {
+                    <ProjectCard project={project} key={projectId} title={"Open"} 
+                    showBuy={false}
+                    showConstituentCount={true} 
+                    onClose={async () => {
                       history.push(`/project/${projectId}`);
                     }} />
                 ))}
