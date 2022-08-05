@@ -81,7 +81,7 @@ const NavBar = () => {
               PROFILE
             </Nav.Link>
             <Nav.Link
-              href={"https://testnets.opensea.io/collection/splash-projects-poc"}
+              href={"https://testnets.opensea.io/collection/splash-projects"}
               className={classes.nounsNavLink}
               target="_blank"
               rel="noreferrer"
