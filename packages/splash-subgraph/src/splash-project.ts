@@ -6,7 +6,7 @@ import {
   TransferSingle,
 } from './types/SplashProject/SplashProject';
 import { SplashLink, SplashProject } from './types/schema';
-import { getOrCreateAccount } from './utils/helpers';
+import { getOrCreateAccount, getOrCreateProject } from './utils/helpers';
 import { Address, ipfs, json, JSONValue, log } from '@graphprotocol/graph-ts';
 import { BIGINT_ONE, BIGINT_ZERO } from './utils/constants';
 
@@ -16,7 +16,7 @@ export function handleProjectCreated(event: ProjectCreated): void {
 
   let account = getOrCreateAccount(creatorAddress, true, false);
 
-  let project = new SplashProject(projectId);
+  let project = getOrCreateProject(projectId);
   project.creator = creatorAddress;
   project.price = event.params.price;
   project.uri = event.params.uri;
@@ -43,7 +43,6 @@ export function handleProjectCreated(event: ProjectCreated): void {
     }
   }
 
-  project.supply = BIGINT_ZERO;
   project.updatedAtTimestamp = event.block.timestamp;
   project.save();
 
@@ -113,8 +112,8 @@ export function handleTransferSingle(event: TransferSingle): void {
   let projectId = event.params.id.toString();
   let from = event.params.from.toHex();
   if (from.localeCompare(Address.empty().toHexString())) {
-    let project = SplashProject.load(projectId);
-    project!.supply = project!.supply.plus(BIGINT_ONE);
-    project!.save();
+    let project = getOrCreateProject(projectId);
+    project.supply = project.supply.plus(BIGINT_ONE);
+    project.save();
   }
 }

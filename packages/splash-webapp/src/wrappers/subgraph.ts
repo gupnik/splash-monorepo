@@ -17,6 +17,7 @@ export const projectsQuery = (account?: string) => gql`
       name
       image
       description
+      supply
       consumers {
         project {
           id
@@ -25,6 +26,7 @@ export const projectsQuery = (account?: string) => gql`
           name
           image 
           description
+          supply
         }
       }
       constituents {
@@ -35,6 +37,7 @@ export const projectsQuery = (account?: string) => gql`
           name
           image 
           description
+          supply
         }
       }
     }
@@ -51,6 +54,7 @@ export const searchQuery = (query: string) => gql`
     name
     image
     description
+    supply
     consumers {
       project {
         id
@@ -59,6 +63,7 @@ export const searchQuery = (query: string) => gql`
         name
         image 
         description
+        supply
       }
     }
     constituents {
@@ -69,6 +74,7 @@ export const searchQuery = (query: string) => gql`
         name
         image 
         description
+        supply
       }
     }
   }

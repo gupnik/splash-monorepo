@@ -5,7 +5,7 @@ import { SplashProjectFactory } from '@splash/sdk';
 import config from "../../config";
 
 const ProjectCard: React.FC<{ project: ProjectState, title: string, showBuy: boolean, showRemixCount?: boolean, onClose?: (description: string, price: string) => Promise<void> }> = props => {
-  const { id, price, name, description, image, consumers } = props.project;
+  const { id, price, name, description, image, consumers, supply } = props.project;
 
   const splashProjectContract = new SplashProjectFactory().attach(
     config.addresses.splashProject,
@@ -45,7 +45,7 @@ const ProjectCard: React.FC<{ project: ProjectState, title: string, showBuy: boo
             (<Button size="small" color="primary" onClick={() => {
               buyProject(id)
             }}>
-            {buyProjectState.status === "Mining" ? "Mining" : "Buy"}
+            {buyProjectState.status === "Mining" ? "Mining" : `Buy(${supply})`}
             </Button>) :
             <div />}
           </CardActions>

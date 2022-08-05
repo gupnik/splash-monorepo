@@ -18,7 +18,6 @@ const ProfilePage: React.FC<ProfilePageProps> = props => {
 
 
   useEffect(() => {
-    console.log(data);
     if (!data || !data.splashAccount) return;
     const projectsData = data.splashAccount.projects as any[];
     setProjects(projectsData.map(project => {
@@ -29,6 +28,7 @@ const ProfilePage: React.FC<ProfilePageProps> = props => {
         name: project.name,
         description: project.description,
         image: project.image,
+        supply: project.supply,
         consumers: project.consumers.map((x: any) => {
           return {
           id: x.project.id,
@@ -36,6 +36,7 @@ const ProfilePage: React.FC<ProfilePageProps> = props => {
           name: x.project.name,
           description: x.project.description,
           image: x.project.image,
+          supply: x.project.supply,
         }}),
         constituents: project.constituents.map((x: any) => {
           return {
@@ -44,6 +45,7 @@ const ProfilePage: React.FC<ProfilePageProps> = props => {
             name: x.constituent.name,
             description: x.constituent.description,
             image: x.constituent.image,
+            supply: x.constituent.supply,
           }
         })
       }
