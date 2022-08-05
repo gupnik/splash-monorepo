@@ -30,7 +30,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         {searchString !== "" ?
         (<Grid container spacing={2}>
             {Object.entries(searchedProjects.projects).map(([projectId, project]) =>  (
-                <ProjectCard project={project} key={projectId} title={"Open"} onClose={async () => {
+                <ProjectCard project={project} key={projectId} title={"Open"} showBuy={false} onClose={async () => {
                   history.push(`/project/${projectId}`);
                 }} />
             ))}
@@ -64,7 +64,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             </div>) :
             (<Grid container spacing={2}>
                 {Object.entries(projects).map(([projectId, project]) =>  (
-                    <ProjectCard project={project} key={projectId} title={"Open"} onClose={async () => {
+                    <ProjectCard project={project} key={projectId} title={"Open"} showBuy={false} onClose={async () => {
                       history.push(`/project/${projectId}`);
                     }} />
                 ))}

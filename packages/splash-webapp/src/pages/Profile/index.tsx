@@ -61,7 +61,9 @@ const ProfilePage: React.FC<ProfilePageProps> = props => {
         :
         <Grid container spacing={2}>
             {Object.entries(projects).map(([projectId, project]) =>  (
-                <ProjectCard project={project} key={projectId} title={"Remix"} onClose={async () => {
+                <ProjectCard project={project} key={projectId} title={"Remix"} 
+                showRemixCount={true}
+                showBuy={true} onClose={async () => {
                   history.push(`/project/${projectId}`);
                 }} />
             ))}

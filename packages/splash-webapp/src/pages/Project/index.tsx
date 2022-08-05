@@ -167,6 +167,7 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
             {Object.entries(projects).map(([projectId, project]) => (
                 <ProjectCard project={project} key={projectId} 
                 title={addState.status === "Mining" ? "Mining..." : "Add"} 
+                showBuy={false}
                 onClose={async (description, price) => {
                   if (description && description.startsWith("[")) { 
                     try {             
