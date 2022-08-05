@@ -3,7 +3,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } f
 
 
 const ProjectCard: React.FC<{ project: ProjectState, title: string, onClose?: (description: string, price: string) => Promise<void> }> = props => {
-  const { price, name, description, image } = props.project;
+  const { price, name, description, image, consumers } = props.project;
 
   return (
     <Grid item>
@@ -17,9 +17,9 @@ const ProjectCard: React.FC<{ project: ProjectState, title: string, onClose?: (d
             <Typography gutterBottom variant="body2" component="div" textAlign={"center"}>
                 {name}
             </Typography>
-            {/* <Typography variant="body2" color="text.secondary">
-                {projectData["description"]}
-            </Typography> */}
+            <Typography gutterBottom variant="body2" component="div" textAlign={"center"}>
+                {`Remix Count: ${consumers.length}`}
+            </Typography>
           </CardContent>
           <CardActions>
             <Button size="small" color="primary" onClick={() => {

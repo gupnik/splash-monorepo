@@ -22,6 +22,14 @@ const reduxSafeSetProjects = (data: any): ProjectsState => {
       name: project.name,
       description: project.description,
       image: project.image,
+      consumers: project.consumers.map((x: any) => {
+        return {
+        id: x.project.id,
+        price: x.project.price,
+        name: x.project.name,
+        description: x.project.description,
+        image: x.project.image,
+      }}),
       constituents: project.constituents.map((x: any) => {
         return {
         id: x.constituent.id,

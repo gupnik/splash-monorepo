@@ -17,6 +17,8 @@ type SplashProject @entity {
 
   tags: [String!]!
 
+  consumers: [SplashLink!]! @derivedFrom(field: "constituent")
+
   constituents: [SplashLink!]! @derivedFrom(field: "project")
 }
 

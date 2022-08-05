@@ -17,6 +17,16 @@ export const projectsQuery = (account?: string) => gql`
       name
       image
       description
+      consumers {
+        project {
+          id
+          uri
+          price
+          name
+          image 
+          description
+        }
+      }
       constituents {
         constituent {
           id
@@ -41,6 +51,16 @@ export const searchQuery = (query: string) => gql`
     name
     image
     description
+    consumers {
+      project {
+        id
+        uri
+        price
+        name
+        image 
+        description
+      }
+    }
     constituents {
       constituent {
         id

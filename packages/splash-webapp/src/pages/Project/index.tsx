@@ -136,7 +136,9 @@ const ProjectPage: React.FC<ProjectPageProps> = props => {
                   onExit()
                 }                          
               }}>
-              {updateURIState.status === "Mining" ? "Mining..." : (id === "new" ? "Create" : "Save")} 
+              {(createProjectState.status === "Mining" || updateURIState.status === "Mining") 
+                ? "Mining..." 
+                : (id === "new" ? "Create" : "Save")} 
               </Button>
           </CardActions>
         </Card>

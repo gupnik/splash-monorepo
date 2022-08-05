@@ -7,6 +7,7 @@ export interface ProjectState {
   name: string;
   description: string;
   image: string;
+  consumers: ProjectState[];
   constituents: ProjectState[];
 }
 
@@ -17,6 +18,7 @@ const initialState: ProjectState = {
   name: '',
   description: '',
   image: 'https://ipfs.io/ipfs/QmZWexPEudXMLm3Fn51YrDmoEGMe32AT4GwE3UHiP1VgHi', 
+  consumers: [],
   constituents: [],
 }
 
