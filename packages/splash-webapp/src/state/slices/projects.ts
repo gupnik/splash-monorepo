@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProjectState } from "./project";
 
-interface ProjectsState {
+export interface ProjectsState {
   projects:  { [id: string]: ProjectState};
 }
 

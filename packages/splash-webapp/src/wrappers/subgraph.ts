@@ -31,3 +31,26 @@ export const projectsQuery = (account?: string) => gql`
   }
 }
 `
+
+export const searchQuery = (query: string) => gql`
+{
+  search(text: \"${query.toLowerCase()}\") {
+    id
+    uri
+    price
+    name
+    image
+    description
+    constituents {
+      constituent {
+        id
+        uri
+        price
+        name
+        image 
+        description
+      }
+    }
+  }
+}
+`
