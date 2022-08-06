@@ -73,7 +73,7 @@ const NavBar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" className={classes.navToggle} />
           <Navbar.Collapse className="justify-content-end">
-          <Nav.Link
+            <Nav.Link
               href={`/profile/${activeAccount}`}
               className={classes.nounsNavLink}
               rel="noreferrer"
@@ -95,6 +95,14 @@ const NavBar = () => {
               rel="noreferrer"
             >
               SUBGRAPH
+            </Nav.Link>
+            <Nav.Link
+              href={"https://drive.google.com/file/d/1AqgGKbx834Rw5lfv_PFnPa5-CIMtfW8L/view?usp=sharing"}
+              className={classes.nounsNavLink}
+              target="_blank"
+              rel="noreferrer"
+            >
+              PITCH DECK
             </Nav.Link>
             {/*<Nav.Link as={Link} to="/playground" className={classes.nounsNavLink}>
               PLAYGROUND
