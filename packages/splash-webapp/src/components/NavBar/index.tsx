@@ -8,6 +8,7 @@ import WalletConnectModal from '../WalletConnectModal';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import clsx from 'clsx';
+import Pitch from '../../assets/Deck.pdf';
 
 const NavBar = () => {
   const activeAccount = useAppSelector(state => state.account.activeAccount);
@@ -97,7 +98,7 @@ const NavBar = () => {
               SUBGRAPH
             </Nav.Link>
             <Nav.Link
-              href={"https://drive.google.com/file/d/1AqgGKbx834Rw5lfv_PFnPa5-CIMtfW8L/view?usp=sharing"}
+              href={Pitch}
               className={classes.nounsNavLink}
               target="_blank"
               rel="noreferrer"
