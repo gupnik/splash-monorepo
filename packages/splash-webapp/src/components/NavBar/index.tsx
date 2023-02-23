@@ -8,7 +8,6 @@ import WalletConnectModal from '../WalletConnectModal';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import clsx from 'clsx';
-import Pitch from '../../assets/Deck.pdf';
 
 const NavBar = () => {
   const activeAccount = useAppSelector(state => state.account.activeAccount);
@@ -97,14 +96,14 @@ const NavBar = () => {
             >
               SUBGRAPH
             </Nav.Link>
-            <Nav.Link
+            {/* <Nav.Link
               href={Pitch}
               className={classes.nounsNavLink}
               target="_blank"
               rel="noreferrer"
             >
               PITCH DECK
-            </Nav.Link>
+            </Nav.Link> */}
             {/*<Nav.Link as={Link} to="/playground" className={classes.nounsNavLink}>
               PLAYGROUND
             </Nav.Link> */}
